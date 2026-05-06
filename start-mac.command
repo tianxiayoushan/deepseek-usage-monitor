@@ -7,7 +7,7 @@
 #   chmod +x start-mac.command
 #
 # This script will:
-#   1. Check for Node.js and Python 3
+#   1. Check for Node.js and Python 3.10+
 #   2. Install frontend npm dependencies if needed
 #   3. Create a Python venv and install backend dependencies if needed
 #   4. Start the FastAPI backend (background)
@@ -84,20 +84,43 @@ if ! command -v npm &>/dev/null; then
 fi
 ok "npm found: $(npm --version)"
 
-# ── 3. Check Python 3 ────────────────────────────────────────────────
-info "Checking Python 3..."
+# ── Python version helpers ────────────────────────────────────────────
+python_version_ok() {
+  "$1" - <<'PY'
+import sys
+
+sys.exit(0 if sys.version_info >= (3, 10) else 1)
+PY
+}
+
+python_version_text() {
+  "$1" --version 2>&1
+}
+
+# ── 3. Check Python 3.10+ ────────────────────────────────────────────
+info "Checking Python 3.10+..."
 PYTHON_CMD=""
-if command -v python3 &>/dev/null; then
-  PYTHON_CMD="python3"
-elif command -v python &>/dev/null && python --version 2>&1 | grep -q "Python 3"; then
-  PYTHON_CMD="python"
-else
-  error "Python 3 is not installed or not in PATH."
-  echo "  Please install Python 3.10+ from: https://www.python.org/downloads/"
+for candidate in python3.11 python3.10 python3 python; do
+  if command -v "$candidate" &>/dev/null; then
+    PYTHON_CMD="$candidate"
+    break
+  fi
+done
+
+if [[ -z "$PYTHON_CMD" ]]; then
+  error "Python is not installed or not in PATH."
+  echo "  Python >= 3.10 is required. Please install Python 3.10+ or make python3.10 available in PATH."
   read -r -p "Press Enter to exit..."
   exit 1
 fi
-PYTHON_VERSION=$($PYTHON_CMD --version)
+
+PYTHON_VERSION=$(python_version_text "$PYTHON_CMD")
+if ! python_version_ok "$PYTHON_CMD"; then
+  error "$PYTHON_VERSION found, but Python >= 3.10 is required."
+  echo "  Python >= 3.10 is required. Please install Python 3.10+ or make python3.10 available in PATH."
+  read -r -p "Press Enter to exit..."
+  exit 1
+fi
 ok "Python found: $PYTHON_VERSION"
 
 # ── 4. Frontend npm install ───────────────────────────────────────────
@@ -117,6 +140,20 @@ if [[ ! -d ".venv" ]]; then
   info "Creating Python virtual environment..."
   "$PYTHON_CMD" -m venv .venv || { error "Failed to create virtual environment."; exit 1; }
   ok "Virtual environment created."
+elif [[ -x ".venv/bin/python" ]]; then
+  VENV_PYTHON_VERSION=$(python_version_text ".venv/bin/python")
+  if ! python_version_ok ".venv/bin/python"; then
+    error "Existing backend/.venv uses $VENV_PYTHON_VERSION, but Python >= 3.10 is required."
+    echo "  Delete backend/.venv and run this script again, or rebuild it with Python 3.10+."
+    read -r -p "Press Enter to exit..."
+    exit 1
+  fi
+  ok "Existing backend virtual environment uses $VENV_PYTHON_VERSION."
+else
+  error "Existing backend/.venv is missing bin/python."
+  echo "  Delete backend/.venv and run this script again."
+  read -r -p "Press Enter to exit..."
+  exit 1
 fi
 
 info "Activating virtual environment..."

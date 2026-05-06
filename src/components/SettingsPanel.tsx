@@ -114,14 +114,14 @@ export default function SettingsPanel({ onClose, onSaved, lang, t }: Props) {
         {/* Backend unavailable */}
         {backendUnavailable && (
           <div style={{
-            display: 'flex', alignItems: 'center', gap: 8, marginBottom: 20,
+            display: 'flex', alignItems: 'flex-start', gap: 8, marginBottom: 20,
             padding: '10px 14px',
             background: 'var(--accent-red-glow)',
             border: '1px solid var(--accent-red)',
             borderRadius: 6,
           }}>
-            <AlertCircle size={13} color="var(--accent-red)" />
-            <span className={`font-num label-caps ${lang === 'zh' ? 'zh' : ''}`} style={{ fontSize: 10, color: 'var(--accent-red)' }}>
+            <AlertCircle size={13} color="var(--accent-red)" style={{ flexShrink: 0, marginTop: 1 }} />
+            <span className={`font-num label-caps ${lang === 'zh' ? 'zh' : ''}`} style={{ fontSize: 10, color: 'var(--accent-red)', lineHeight: 1.5, overflowWrap: 'anywhere' }}>
               {t(lang, 'backendOffline')}
             </span>
           </div>
