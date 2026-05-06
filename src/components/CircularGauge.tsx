@@ -1,6 +1,4 @@
-// src/components/CircularGauge.tsx
-// Nothing-inspired industrial instrument — dot-matrix balance, precision ticks
-// Plan A: no independent ruler. Red balance marker lives on the bezel edge.
+import type { Language, TranslationFunction } from '../i18n';
 
 interface Props {
   balance: number;
@@ -9,18 +7,18 @@ interface Props {
   totalSpend: number;
   uptime: number;
   isFocused?: boolean;
-  lang: any;
-  t: any;
+  lang: Language;
+  t: TranslationFunction;
 }
 
 function pad2(n: number) { return String(n).padStart(2, '0'); }
 function fmtUptime(s: number) {
   return `${pad2(Math.floor(s / 3600))}:${pad2(Math.floor((s % 3600) / 60))}:${pad2(s % 60)}`;
 }
-function fmtTime(d: Date, lang: string) {
+function fmtTime(d: Date, lang: Language) {
   return d.toLocaleTimeString(lang === 'zh' ? 'zh-CN' : 'en-US', { hour: '2-digit', minute: '2-digit', hour12: true }).toUpperCase();
 }
-function fmtDate(d: Date, lang: string) {
+function fmtDate(d: Date, lang: Language) {
   return d.toLocaleDateString(lang === 'zh' ? 'zh-CN' : 'en-US', { weekday: 'long', month: 'long', day: 'numeric' }).toUpperCase();
 }
 
@@ -42,18 +40,20 @@ const MATRIX: Record<string, string[]> = {
 function DotMatrixNumber({ text, x, y, dotSize = 8, dotGap = 2, charGap = 12 }: { text: string, x: number, y: number, dotSize?: number, dotGap?: number, charGap?: number }) {
   const chars = text.split("");
   
-  let currentX = 0;
-  const charsToRender = chars.map((char) => {
+  const { items: charsToRender, currentX: totalWidth } = chars.reduce((acc, char) => {
     const matrix = MATRIX[char] || MATRIX["0"];
     const cols = matrix[0].length;
     const charWidth = cols * dotSize + (cols - 1) * dotGap;
-    const item = { matrix, cols, startX: currentX, charWidth };
-    currentX += charWidth + charGap;
-    return item;
-  });
+    const startX = acc.currentX;
+    const nextX = acc.currentX + charWidth + charGap;
+    return {
+      items: [...acc.items, { matrix, cols, startX, charWidth }],
+      currentX: nextX
+    };
+  }, { items: [] as { matrix: string[], cols: number, startX: number, charWidth: number }[], currentX: 0 });
 
-  const totalWidth = currentX - charGap;
-  const renderStartX = x - totalWidth / 2;
+  const totalWidthActual = totalWidth - charGap;
+  const renderStartX = x - totalWidthActual / 2;
 
   return (
     <g transform={`translate(${renderStartX}, ${y})`}>

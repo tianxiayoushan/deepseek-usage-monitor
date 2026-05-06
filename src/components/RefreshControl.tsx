@@ -2,13 +2,15 @@
 // Mechanical segmented switch — industrial toggle
 import { RefreshCw } from 'lucide-react';
 
+import type { Language, TranslationFunction } from '../i18n';
+
 interface Props {
   interval: 5 | 10 | 30;
   onChange: (v: 5 | 10 | 30) => void;
   isLoading: boolean;
   lastUpdatedAt: string;
-  lang: any;
-  t: any;
+  lang: Language;
+  t: TranslationFunction;
 }
 
 const OPTS: Array<5|10|30> = [5, 10, 30];

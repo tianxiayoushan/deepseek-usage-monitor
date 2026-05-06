@@ -2,14 +2,15 @@
 // Settings overlay — Nothing-inspired industrial, matches existing design system
 import { useState, useEffect, useCallback } from 'react';
 import { X, Save, CheckCircle, AlertCircle, Key } from 'lucide-react';
+import type { Language, TranslationFunction } from '../i18n';
 import { api } from '../api';
-import type { SettingsResponse } from '../api';
+import type { SettingsResponse, SaveSettingsPayload } from '../api';
 
 interface Props {
   onClose: () => void;
   onSaved: () => void; // called after a successful save so parent can re-fetch
-  lang: any;
-  t: any;
+  lang: Language;
+  t: TranslationFunction;
 }
 
 type SaveState = 'idle' | 'saving' | 'ok' | 'error';
@@ -42,7 +43,7 @@ export default function SettingsPanel({ onClose, onSaved, lang, t }: Props) {
       return;
     }
 
-    const payload: any = { initial_total_credit: creditVal };
+    const payload: SaveSettingsPayload = { initial_total_credit: creditVal };
     if (apiKeyInput.trim() !== '') {
       payload.deepseek_api_key = apiKeyInput.trim();
     }

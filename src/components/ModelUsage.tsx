@@ -1,9 +1,11 @@
 // src/components/ModelUsage.tsx — compact row layout
+import type { Language, TranslationFunction } from '../i18n';
 import type { ModelUsageData } from '../mockData';
+
 interface Props {
   models: ModelUsageData[];
-  lang: any;
-  t: any;
+  lang: Language;
+  t: TranslationFunction;
 }
 
 function fmtTok(n: number) {

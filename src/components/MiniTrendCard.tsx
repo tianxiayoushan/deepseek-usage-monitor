@@ -1,12 +1,13 @@
 // src/components/MiniTrendCard.tsx
 // Industrial sparkline — square joints, monochrome
 import type { TrendPoint } from '../mockData';
+import type { Language } from '../i18n';
 
 interface Props {
   title: string;
   data: TrendPoint[];
   formatValue?: (v: number) => string;
-  lang?: any;
+  lang?: Language;
 }
 
 function defaultFmt(v: number): string {

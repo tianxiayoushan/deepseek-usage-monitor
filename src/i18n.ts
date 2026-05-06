@@ -147,6 +147,8 @@ export const translations = {
 
 export type TranslationKeys = keyof typeof translations.en;
 
-export const t = (lang: Language, key: TranslationKeys): string => {
+export type TranslationFunction = (lang: Language, key: TranslationKeys) => string;
+
+export const t: TranslationFunction = (lang: Language, key: TranslationKeys): string => {
   return translations[lang][key] || translations.en[key] || key;
 };

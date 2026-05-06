@@ -1,5 +1,6 @@
 // src/components/MetricCard.tsx
 // Industrial metric card — strong borders, clear hierarchy, monochrome
+import type { Language } from '../i18n';
 import type { ReactNode } from 'react';
 
 interface Props {
@@ -8,7 +9,7 @@ interface Props {
   sub?: string;
   accent?: 'white' | 'red' | 'blue';
   icon?: ReactNode;
-  lang?: any;
+  lang?: Language;
 }
 
 export default function MetricCard({ label, value, sub, accent = 'white', icon, lang }: Props) {

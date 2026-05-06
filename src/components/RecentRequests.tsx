@@ -1,9 +1,11 @@
 // src/components/RecentRequests.tsx — 4 rows max, compact, no clipping
+import type { Language, TranslationFunction } from '../i18n';
 import type { RequestRecord } from '../mockData';
+
 interface Props {
   requests: RequestRecord[];
-  lang: any;
-  t: any;
+  lang: Language;
+  t: TranslationFunction;
 }
 
 function fmtTime(iso: string) {
