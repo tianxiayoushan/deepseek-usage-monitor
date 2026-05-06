@@ -148,4 +148,4 @@ This is an unofficial third-party tool and is not affiliated with DeepSeek. Use 
 
 ## License / 许可证
 
-TBD (To Be Determined)
+MIT License
