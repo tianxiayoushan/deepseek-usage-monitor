@@ -4,6 +4,8 @@ A local-first DeepSeek usage and balance monitoring dashboard built with React, 
 
 一个本地优先的 DeepSeek API 用量与余额监控仪表盘，基于 React、TypeScript、Vite、Tailwind CSS 和 FastAPI 构建。
 
+[English](#english) | [中文](#中文)
+
 ## Preview / 预览
 
 ![DeepSeek Usage Monitor dashboard demo](./docs/assets/demo-screenshot.png)
@@ -103,7 +105,8 @@ uvicorn main:app --port 8789 --reload
 On Windows, activate the virtual environment with:
 
 ```bash
-backend\.venv\Scripts\activate
+cd backend
+.venv\Scripts\activate
 ```
 
 ### One-click Scripts
@@ -120,7 +123,7 @@ These scripts are intended as local convenience wrappers. Review and configure `
 The backend reads secrets from `backend/.env`. The committed template is `backend/.env.example`.
 
 | Variable | Required | Description |
-| --- | --- | --- |
+|---|---|---|
 | `DEEPSEEK_API_KEY` | Yes, for live API access | Your DeepSeek API key. Keep it only in `backend/.env`. |
 | `INITIAL_TOTAL_CREDIT_CNY` | Optional | User-configured baseline used to estimate total spend. |
 
@@ -253,7 +256,8 @@ uvicorn main:app --port 8789 --reload
 Windows 下可使用：
 
 ```bash
-backend\.venv\Scripts\activate
+cd backend
+.venv\Scripts\activate
 ```
 
 ### 一键启动脚本
@@ -270,7 +274,7 @@ backend\.venv\Scripts\activate
 后端从 `backend/.env` 读取密钥。仓库中提交的模板文件是 `backend/.env.example`。
 
 | 变量 | 是否必需 | 说明 |
-| --- | --- | --- |
+|---|---|---|
 | `DEEPSEEK_API_KEY` | 连接真实 API 时必需 | DeepSeek API key，只应放在 `backend/.env`。 |
 | `INITIAL_TOTAL_CREDIT_CNY` | 可选 | 用于估算 Total Spend 的用户配置初始额度。 |
 
