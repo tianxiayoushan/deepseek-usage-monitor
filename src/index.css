@@ -1,0 +1,318 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ══════════════════════════════════════════
+   THEME: DARK — Nothing-inspired Industrial
+══════════════════════════════════════════ */
+:root,
+:root[data-theme="dark"] {
+  --bg:              #050505;
+  --bg-left:         #080808;
+  --bg-right:        #0A0A0A;
+  --bg-card:         #0E0E0E;
+  --bg-card-hover:   #151515;
+  --bg-inset:        #0A0A0A;
+  --border:          rgba(255, 255, 255, 0.18);
+  --border-subtle:   rgba(255, 255, 255, 0.08);
+  --border-strong:   rgba(255, 255, 255, 0.35);
+
+  --text:            #F4F4F0;
+  --text-strong:     #FFFFFF;
+  --text-secondary:  #D4D4CE;
+  --text-muted:      #A1A19A;
+  --text-label:      #B2B2AC;
+
+  --accent-green:      #00D084;
+  --accent-green-soft: rgba(0, 208, 132, 0.08);
+  --accent-green-glow: rgba(0, 208, 132, 0.25);
+
+  --accent-red:      #FF3B30;
+  --accent-red-b:    #FF5F56;
+  --accent-red-glow: rgba(255, 59, 48, 0.25);
+
+  --accent-blue:     #4EA3FF;
+  --accent-blue-b:   #6BB5FF;
+
+  --gauge-bezel:       #1C1C1C;
+  --gauge-bezel-outer: #0A0A0A;
+  --gauge-bezel-hi:    rgba(255,255,255,0.07);
+  --gauge-bezel2:      #2A2A2A;
+  --gauge-track:       #151515;
+  --gauge-arc:         #F4F4F0;
+  --gauge-center:      #080808;
+  --gauge-center-mid:  #0D0D0D;
+  --gauge-tick-maj:    #4A4A4A;
+  --gauge-tick-mid:    #2E2E2E;
+  --gauge-tick-min:    #1E1E1E;
+  --gauge-inner-ring:  #242424;
+  --gauge-vignette:    rgba(0,0,0,0.55);
+
+  --ruler-spine:     #303030;
+  --ruler-maj:       #4A4A4A;
+  --ruler-mid:       #303030;
+  --ruler-min:       #1E1E1E;
+  --ruler-label:     #7A7A74;
+
+  /* dot-matrix display: white dots on black in dark mode */
+  --dot-matrix-color:   #FFFFFF;
+  --dot-matrix-gap:     rgba(8,8,8,0.82);
+  --dot-matrix-dim:     rgba(255,255,255,0.10);
+
+  --card-shadow:
+    0 1px 0 rgba(255,255,255,0.04) inset,
+    0 -1px 0 rgba(0,0,0,0.4) inset,
+    0 6px 24px rgba(0,0,0,0.6),
+    0 2px 6px rgba(0,0,0,0.4);
+  --card-border-image:  none;
+  --panel-shadow:    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  --trend-line:      var(--text);
+  --trend-glow:      rgba(244, 244, 240, 0.12);
+
+  --stage-bg-radial: radial-gradient(ellipse 70% 60% at 30% 50%,
+      rgba(255,255,255,0.015) 0%, transparent 70%);
+}
+
+/* ══════════════════════════════════════════
+   THEME: LIGHT — Nothing-inspired Industrial
+══════════════════════════════════════════ */
+:root[data-theme="light"] {
+  --bg:              #F4F3EF;
+  --bg-left:         #EEEDEA;
+  --bg-right:        #F4F3EF;
+  --bg-card:         #FFFFFF;
+  --bg-card-hover:   #FAFAF7;
+  --bg-inset:        #ECEBE6;
+  --border:          rgba(0, 0, 0, 0.15);
+  --border-subtle:   rgba(0, 0, 0, 0.08);
+  --border-strong:   rgba(0, 0, 0, 0.32);
+
+  --text:            #111111;
+  --text-strong:     #000000;
+  --text-secondary:  #4A4A44;
+  --text-muted:      #6F6F68;
+  --text-label:      #5F5F58;
+
+  --accent-green:      #008F5A;
+  --accent-green-soft: rgba(0, 143, 90, 0.06);
+  --accent-green-glow: rgba(0, 143, 90, 0.15);
+
+  --accent-red:      #D93025;
+  --accent-red-b:    #E84C3D;
+  --accent-red-glow: rgba(217, 48, 37, 0.12);
+
+  --accent-blue:     #2563EB;
+  --accent-blue-b:   #3B76F0;
+
+  --gauge-bezel:       #B8B7B1;
+  --gauge-bezel-outer: #9A9992;
+  --gauge-bezel-hi:    rgba(255,255,255,0.55);
+  --gauge-bezel2:      #C8C7C1;
+  --gauge-track:       #E0DFD9;
+  --gauge-arc:         #111111;
+  --gauge-center:      #F4F3EF;
+  --gauge-center-mid:  #EEECEA;
+  --gauge-tick-maj:    #8A8A84;
+  --gauge-tick-mid:    #B0B0AA;
+  --gauge-tick-min:    #CCCCC6;
+  --gauge-inner-ring:  #D8D7D1;
+  --gauge-vignette:    rgba(0,0,0,0.08);
+
+  --ruler-spine:     #B0AFA9;
+  --ruler-maj:       #888882;
+  --ruler-mid:       #AAAAА4;
+  --ruler-min:       #D0D0CA;
+  --ruler-label:     #6A6A64;
+
+  /* dot-matrix display: near-black dots on off-white in light mode */
+  --dot-matrix-color:   #080808;
+  --dot-matrix-gap:     rgba(244,243,239,0.80);
+  --dot-matrix-dim:     rgba(0,0,0,0.06);
+
+  --card-shadow:
+    0 1px 0 rgba(255,255,255,0.80) inset,
+    0 -1px 0 rgba(0,0,0,0.06) inset,
+    0 4px 16px rgba(0,0,0,0.08),
+    0 1px 4px rgba(0,0,0,0.06);
+  --panel-shadow:    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  --trend-line:      var(--text);
+  --trend-glow:      rgba(17, 17, 17, 0.08);
+
+  --stage-bg-radial: radial-gradient(ellipse 70% 60% at 30% 50%,
+      rgba(255,255,255,0.25) 0%, transparent 70%);
+}
+
+/* ══════════════════════════════════════════
+   GLOBAL RESET & BASE
+══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body, #root {
+  margin: 0; padding: 0;
+  width: 100%; height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar        { width: 4px; height: 4px; }
+::-webkit-scrollbar-track  { background: var(--bg); }
+::-webkit-scrollbar-thumb  { background: var(--border); border-radius: 2px; }
+
+/* ── Utility classes ── */
+.font-num {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Cards ── */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: var(--card-shadow);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  /* subtle dot-matrix texture on card surface */
+  background-image: radial-gradient(var(--border-subtle) 1px, transparent 1px);
+  background-size: 14px 14px;
+}
+
+.card:hover {
+  border-color: var(--border-strong);
+}
+
+/* ── Labels ── */
+.label-caps {
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--text-label);
+  font-weight: 500;
+}
+
+.label-caps.zh {
+  letter-spacing: 0.08em;
+  text-transform: none;
+  font-weight: 600;
+}
+
+/* ══════════════════════════════════════════
+   DOT MATRIX RENDERING — LED/LCD Readout Style
+══════════════════════════════════════════ */
+.dot-active {
+  fill: var(--dot-matrix-color);
+  transition: fill 0.3s;
+}
+
+:root[data-theme="dark"] .dot-active {
+  filter: drop-shadow(0 0 4px var(--dot-matrix-color));
+}
+
+/* light mode: crisp shadow so active dots pop off the off-white face */
+:root[data-theme="light"] .dot-active {
+  filter: drop-shadow(0 0 1.5px rgba(0,0,0,0.35));
+}
+
+.dot-inactive {
+  fill: var(--dot-matrix-dim);
+  transition: fill 0.3s;
+}
+
+/* ── Animations ── */
+@keyframes rec-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.2; }
+}
+.rec-pulse { animation: rec-pulse 1.4s ease-in-out infinite; }
+
+@keyframes spin-ccw {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.spin { animation: spin-ccw 1.2s linear infinite; }
+
+@keyframes trend-draw {
+  from { stroke-dashoffset: 800; }
+  to   { stroke-dashoffset: 0; }
+}
+.trend-line {
+  stroke-dasharray: 800;
+  animation: trend-draw 1s ease-out forwards;
+}
+
+/* ── Status dots ── */
+.dot-ok  { width:6px; height:6px; border-radius:50%; background:var(--accent-green);
+           box-shadow:0 0 4px var(--accent-green-glow); flex-shrink:0; }
+.dot-err { width:6px; height:6px; border-radius:50%; background:var(--accent-red);
+           box-shadow:0 0 4px var(--accent-red-glow); flex-shrink:0; }
+.dot-live{ width:6px; height:6px; border-radius:50%; background:var(--accent-green);
+           box-shadow:0 0 6px var(--accent-green-glow); flex-shrink:0; }
+
+/* ── Theme toggle ── */
+.theme-toggle {
+  display:flex; align-items:center; justify-content:center;
+  width:30px; height:30px; border-radius:50%; cursor:pointer;
+  background:var(--bg-card); border:1px solid var(--border);
+  color:var(--text-secondary); transition:all 0.15s;
+}
+.theme-toggle:hover {
+  background:var(--bg-card-hover); color:var(--text);
+  border-color:var(--border-strong);
+}
+
+/* ── Metric card accent lines ── */
+.accent-white { border-top-color: var(--text); }
+.accent-red   { border-top-color: var(--accent-red); }
+.accent-blue  { border-top-color: var(--accent-blue); }
+
+/* ── Popover ── */
+.popover {
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  padding: 16px;
+  z-index: 1100;
+  animation: popover-fade 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes popover-fade {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Industrial Slider ── */
+input[type=range].industrial-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  background: transparent;
+  outline: none;
+}
+input[type=range].industrial-slider::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 2px;
+  background: var(--border);
+  border-radius: 1px;
+}
+input[type=range].industrial-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 14px;
+  width: 14px;
+  border-radius: 2px;
+  background: var(--text-strong);
+  cursor: pointer;
+  margin-top: -6px; /* center thumb */
+  box-shadow: 0 0 0 4px var(--bg);
+  border: 1px solid var(--border-strong);
+}
+input[type=range].industrial-slider:focus::-webkit-slider-runnable-track {
+  background: var(--border-strong);
+}

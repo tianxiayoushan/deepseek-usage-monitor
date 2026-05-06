@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DeepSeek Usage Monitor — Launcher</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #080808;
+      --bg-card:   #0E0E0E;
+      --border:    rgba(255,255,255,0.14);
+      --border-hi: rgba(255,255,255,0.32);
+      --text:      #F4F4F0;
+      --muted:     #888882;
+      --label:     #B2B2AC;
+      --red:       #FF3B30;
+      --green:     #00D084;
+      --blue:      #4EA3FF;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+    }
+
+    .stage {
+      width: 100%;
+      max-width: 680px;
+    }
+
+    /* ── Header ── */
+    .header {
+      margin-bottom: 40px;
+    }
+    .header-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+    .header-sub {
+      font-size: 10px;
+      letter-spacing: 0.36em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+    .header-rule {
+      height: 1px;
+      background: var(--border);
+      margin-top: 18px;
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 22px 24px;
+      margin-bottom: 16px;
+    }
+    .card-title {
+      font-size: 9px;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--label);
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+
+    /* ── Warning banner ── */
+    .warning {
+      border: 1px solid rgba(255,59,48,0.35);
+      background: rgba(255,59,48,0.06);
+      border-radius: 6px;
+      padding: 14px 20px;
+      margin-bottom: 16px;
+      font-size: 12px;
+      color: var(--label);
+      line-height: 1.7;
+    }
+    .warning strong {
+      color: var(--red);
+      display: block;
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    /* ── Prereq ── */
+    .prereq {
+      border: 1px solid rgba(78,163,255,0.30);
+      background: rgba(78,163,255,0.05);
+      border-radius: 6px;
+      padding: 14px 20px;
+      margin-bottom: 16px;
+      font-size: 12px;
+      color: var(--label);
+      line-height: 1.7;
+    }
+    .prereq strong {
+      color: var(--blue);
+      display: block;
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    /* ── Buttons ── */
+    .btn-row {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 20px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-decoration: none;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      text-transform: uppercase;
+    }
+    .btn:hover {
+      border-color: var(--border-hi);
+      background: rgba(255,255,255,0.03);
+    }
+    .btn .icon {
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .btn .desc {
+      font-size: 10px;
+      color: var(--muted);
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      margin-top: 2px;
+      text-transform: none;
+    }
+    .btn-primary {
+      border-color: rgba(244,244,240,0.4);
+    }
+    .btn-primary:hover {
+      border-color: var(--text);
+      background: rgba(255,255,255,0.05);
+    }
+    .btn-green {
+      border-color: rgba(0,208,132,0.35);
+    }
+    .btn-green:hover {
+      border-color: var(--green);
+    }
+
+    /* ── Steps ── */
+    .steps {
+      list-style: none;
+      counter-reset: step;
+    }
+    .steps li {
+      counter-increment: step;
+      display: flex;
+      gap: 14px;
+      margin-bottom: 14px;
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--label);
+    }
+    .steps li::before {
+      content: counter(step);
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .steps code {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 1px 8px;
+      font-family: inherit;
+      font-size: 11px;
+      color: var(--text);
+      display: inline-block;
+      margin-top: 4px;
+    }
+
+    /* ── Platform tabs ── */
+    .platform-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .platform-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 18px 20px;
+    }
+    .platform-title {
+      font-size: 9px;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--label);
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    .platform-cmd {
+      font-size: 11px;
+      color: var(--green);
+      background: rgba(0,208,132,0.06);
+      border: 1px solid rgba(0,208,132,0.2);
+      border-radius: 3px;
+      padding: 8px 12px;
+      margin-bottom: 8px;
+      display: block;
+      word-break: break-all;
+    }
+    .platform-note {
+      font-size: 10px;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-top: 6px;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      margin-top: 32px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-l {
+      font-size: 9px;
+      letter-spacing: 0.26em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .dot-live {
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 6px rgba(0,208,132,0.5);
+      margin-right: 6px;
+      vertical-align: middle;
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.25; }
+    }
+  </style>
+</head>
+<body>
+  <div class="stage">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="header-title">DeepSeek Usage Monitor</div>
+      <div class="header-sub">Launcher &amp; Setup Guide &nbsp;·&nbsp; v0.2.2</div>
+      <div class="header-rule"></div>
+    </div>
+
+    <!-- Important notice -->
+    <div class="warning">
+      <strong>⚠ Notice</strong>
+      This page is a <strong>launcher guide</strong> — it cannot start the backend or frontend by itself.
+      You must run the launch script first, then click <em>Open Dashboard</em> below.
+    </div>
+
+    <!-- Prerequisites -->
+    <div class="prereq">
+      <strong>Prerequisites</strong>
+      Please ensure the following are installed before running any launch script:<br />
+      &nbsp;&nbsp;• <strong>Node.js 18+</strong> — <a href="https://nodejs.org/" style="color:var(--blue)">https://nodejs.org/</a><br />
+      &nbsp;&nbsp;• <strong>Python 3.10+</strong> — <a href="https://www.python.org/downloads/" style="color:var(--blue)">https://www.python.org/downloads/</a><br />
+      &nbsp;&nbsp;• First run will auto-install npm &amp; Python dependencies (may take a few minutes).
+    </div>
+
+    <!-- Quick Launch buttons -->
+    <div class="card">
+      <div class="card-title">01 &mdash; Quick Links</div>
+      <div class="btn-row">
+        <a href="http://localhost:5173" target="_blank" class="btn btn-primary">
+          <span class="icon">⬡</span>
+          <div>
+            <div>Open Dashboard</div>
+            <div class="desc">http://localhost:5173 — requires frontend dev server to be running</div>
+          </div>
+        </a>
+        <a href="http://127.0.0.1:8789/api/health" target="_blank" class="btn btn-green">
+          <span class="icon">◎</span>
+          <div>
+            <div>Check Backend Health</div>
+            <div class="desc">http://127.0.0.1:8789/api/health — should return {"status":"ok"}</div>
+          </div>
+        </a>
+        <a href="http://127.0.0.1:8789/api/settings" target="_blank" class="btn">
+          <span class="icon">⊕</span>
+          <div>
+            <div>View Current Settings</div>
+            <div class="desc">http://127.0.0.1:8789/api/settings — API key status &amp; credit config</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Platform launch -->
+    <div class="card">
+      <div class="card-title">02 &mdash; Start the App</div>
+      <div class="platform-grid">
+        <div class="platform-card">
+          <div class="platform-title">macOS</div>
+          <code class="platform-cmd">Double-click start-mac.command</code>
+          <div class="platform-note">
+            If macOS blocks execution, run once in Terminal:<br />
+            <code style="background:transparent;border:none;color:var(--muted);font-size:10px">chmod +x start-mac.command</code>
+          </div>
+        </div>
+        <div class="platform-card">
+          <div class="platform-title">Windows</div>
+          <code class="platform-cmd">Double-click start-windows.bat</code>
+          <div class="platform-note">
+            Two separate windows will open — one for the backend, one for the frontend. Keep both running.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- First-time setup steps -->
+    <div class="card">
+      <div class="card-title">03 &mdash; First-Time Setup</div>
+      <ol class="steps">
+        <li>Download or clone the repository from GitHub.</li>
+        <li>Run the launch script for your platform (macOS / Windows above).</li>
+        <li>Wait for dependencies to install automatically on first run.</li>
+        <li>Open <a href="http://localhost:5173" style="color:var(--blue)">http://localhost:5173</a> in your browser.</li>
+        <li>Click the <strong>⚙ Settings</strong> icon and enter your <strong>DeepSeek API Key</strong>.<br />
+          <code>Never paste your API key into this HTML file or into the launch scripts.</code>
+        </li>
+        <li>Set <strong>Initial Total Credit</strong> to estimate your historical spend.</li>
+      </ol>
+    </div>
+
+    <!-- Security notice -->
+    <div class="card">
+      <div class="card-title">04 &mdash; Security</div>
+      <ul style="list-style:none; font-size:12px; color:var(--label); line-height:1.8;">
+        <li>🔒 &nbsp; Your API Key is stored only in <code style="font-size:10px">backend/local_settings.json</code> on your machine.</li>
+        <li>🔒 &nbsp; <code style="font-size:10px">backend/.env</code> and <code style="font-size:10px">backend/local_settings.json</code> are in <code style="font-size:10px">.gitignore</code> — they will not be committed.</li>
+        <li>🔒 &nbsp; Never share your API Key. Never upload <code style="font-size:10px">.env</code> or <code style="font-size:10px">local_settings.json</code> to GitHub.</li>
+        <li>🔒 &nbsp; This app is local-only. No data leaves your machine except the DeepSeek balance API call.</li>
+      </ul>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <span class="footer-l">DeepSeek Usage Monitor v0.2.2 &nbsp;·&nbsp; Local Only</span>
+      <span style="font-size:10px; color:var(--muted)"><span class="dot-live"></span>This page is static — no data loaded</span>
+    </div>
+
+  </div>
+</body>
+</html>
