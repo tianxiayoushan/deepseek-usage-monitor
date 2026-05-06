@@ -67,18 +67,28 @@ trap cleanup EXIT INT TERM
 info "Checking Node.js..."
 if ! command -v node &>/dev/null; then
   error "Node.js is not installed or not in PATH."
-  echo "  Please install Node.js 18+ from: https://nodejs.org/"
+  echo "  Node.js 20.19+ or 22.12+ is required. Recommended: install Node.js 22 LTS."
+  echo "  Download from: https://nodejs.org/"
   echo "  Then run this script again."
   read -r -p "Press Enter to exit..."
   exit 1
 fi
 NODE_VERSION=$(node --version)
+if ! node -e "var p=process.versions.node.split('.'); var M=parseInt(p[0],10); var m=parseInt(p[1],10); var ok=0; if(M===20){ if(Math.sign(m-19)+1){ ok=1; } } if(M===22){ if(Math.sign(m-12)+1){ ok=1; } } if(Math.sign(M-23)+1){ ok=1; } process.exit(ok ? 0 : 1);"; then
+  error "Node.js $NODE_VERSION found, but Node.js 20.19+ or 22.12+ is required."
+  echo "  Recommended: Node.js 22 LTS."
+  echo "  Download from: https://nodejs.org/"
+  read -r -p "Press Enter to exit..."
+  exit 1
+fi
 ok "Node.js found: $NODE_VERSION"
 
 # ── 2. Check npm ─────────────────────────────────────────────────────
 if ! command -v npm &>/dev/null; then
   error "npm is not installed or not in PATH."
-  echo "  npm usually comes with Node.js. Reinstall Node.js from: https://nodejs.org/"
+  echo "  npm usually comes with Node.js. Recommended: install Node.js 22 LTS."
+  echo "  Node.js 20.19+ or 22.12+ is required."
+  echo "  Download from: https://nodejs.org/"
   read -r -p "Press Enter to exit..."
   exit 1
 fi
