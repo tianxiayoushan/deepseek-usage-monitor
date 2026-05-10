@@ -11,11 +11,15 @@ struct DesktopDashboardView: View {
 
     var body: some View {
         GeometryReader { proxy in
-            let leftWidth = min(max(proxy.size.width * 0.48, 480), 720)
+            let layout = DesktopDashboardLayout(size: proxy.size)
 
             HStack(spacing: 0) {
-                GaugePanelView(isCompact: false)
-                    .frame(width: leftWidth)
+                GaugePanelView(
+                    isCompact: false,
+                    availableSize: CGSize(width: layout.leftWidth, height: proxy.size.height)
+                )
+                    .frame(width: layout.leftWidth)
+                    .frame(maxHeight: .infinity)
                     .background(palette.leftPanel)
                     .overlay(alignment: .trailing) {
                         Rectangle()
@@ -26,11 +30,11 @@ struct DesktopDashboardView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 16) {
                         StatusBanner()
-                        MetricGridView(columns: 2)
+                        MetricGridView(columns: layout.metricColumns)
                         ModelUsagePanel()
                         RecentRequestsPanel(limit: 5)
                     }
-                    .padding(.horizontal, 28)
+                    .padding(.horizontal, layout.contentPadding)
                     .padding(.vertical, 24)
                 }
                 .background(
@@ -84,12 +88,21 @@ struct FocusDashboardView: View {
     var body: some View {
         GeometryReader { proxy in
             let isCompact = proxy.size.width < 900
+            let horizontalPadding: CGFloat = isCompact ? 32 : 64
+            let maxPanelWidth = isCompact ? proxy.size.width : min(proxy.size.width * 0.72, 720)
             ZStack {
                 palette.background
                 DotGridBackground(color: palette.border.opacity(0.16), spacing: 18)
 
-                GaugePanelView(isCompact: isCompact, showsSummary: false)
-                    .frame(maxWidth: isCompact ? .infinity : min(proxy.size.width * 0.72, 720))
+                GaugePanelView(
+                    isCompact: isCompact,
+                    showsSummary: false,
+                    availableSize: CGSize(
+                        width: max(maxPanelWidth - horizontalPadding, 280),
+                        height: max(proxy.size.height - horizontalPadding, 360)
+                    )
+                )
+                    .frame(maxWidth: isCompact ? .infinity : maxPanelWidth)
                     .padding(isCompact ? 16 : 32)
             }
         }
@@ -102,13 +115,17 @@ struct GaugePanelView: View {
     @Environment(\.colorScheme) private var systemColorScheme
     let isCompact: Bool
     var showsSummary = true
+    var availableSize: CGSize?
 
     private var palette: MonitorPalette {
         MonitorPalette.palette(for: settings.appTheme.resolved(using: systemColorScheme))
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: isCompact ? 20 : 28) {
+        let gaugeSize = resolvedGaugeSize
+        let spacing = resolvedSpacing(for: gaugeSize)
+
+        VStack(alignment: .leading, spacing: spacing) {
             VStack(alignment: .leading, spacing: 4) {
                 Text("DeepSeek")
                     .font(.system(.headline, design: .monospaced).weight(.bold))
@@ -125,7 +142,7 @@ struct GaugePanelView: View {
 
             Spacer(minLength: 0)
 
-            BalanceGaugeView(size: isCompact ? 300 : 500)
+            BalanceGaugeView(size: gaugeSize)
                 .frame(maxWidth: .infinity)
 
             Spacer(minLength: 0)
@@ -146,7 +163,53 @@ struct GaugePanelView: View {
         }
         .padding(isCompact ? 18 : 28)
         .frame(maxWidth: .infinity)
+        .frame(maxHeight: .infinity, alignment: .top)
         .frame(minHeight: isCompact ? (showsSummary ? 520 : 430) : nil)
+    }
+
+    private var resolvedGaugeSize: CGFloat {
+        guard let availableSize else {
+            return isCompact ? 300 : 500
+        }
+
+        let horizontalReserve: CGFloat = isCompact ? 36 : 56
+        let verticalReserve: CGFloat
+        if isCompact {
+            verticalReserve = showsSummary ? 230 : 140
+        } else {
+            verticalReserve = showsSummary ? 220 : 150
+        }
+
+        let maximum: CGFloat = isCompact ? 320 : 500
+        let minimum: CGFloat = isCompact ? (showsSummary ? 240 : 260) : 300
+        let widthBound = availableSize.width - horizontalReserve
+        let heightBound = availableSize.height - verticalReserve
+        return max(minimum, min(maximum, widthBound, heightBound))
+    }
+
+    private func resolvedSpacing(for gaugeSize: CGFloat) -> CGFloat {
+        if isCompact {
+            return gaugeSize < 280 ? 14 : 20
+        }
+        return gaugeSize < 360 ? 18 : 28
+    }
+}
+
+private struct DesktopDashboardLayout {
+    let leftWidth: CGFloat
+    let contentPadding: CGFloat
+    let metricColumns: Int
+
+    init(size: CGSize) {
+        let isWide = size.width >= 1260
+        let minRightWidth: CGFloat = size.width < 1120 ? 430 : 500
+        let preferredLeft = size.width * (isWide ? 0.42 : 0.44)
+        let largestUsefulLeft: CGFloat = isWide ? 640 : 560
+        let maxLeftForRightPanel = max(360, size.width - minRightWidth)
+        let upperBound = min(largestUsefulLeft, maxLeftForRightPanel)
+        leftWidth = min(max(preferredLeft, 380), upperBound)
+        contentPadding = size.width < 1120 ? 18 : 28
+        metricColumns = size.width - leftWidth < 560 ? 1 : 2
     }
 }
 

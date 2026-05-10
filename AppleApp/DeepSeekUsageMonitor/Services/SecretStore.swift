@@ -24,44 +24,78 @@ enum SecretStoreError: LocalizedError, Equatable {
 final class KeychainSecretStore: SecretStoring {
     private let service: String
     private let account: String
+    private let accessGroup: String?
 
-    init(service: String = "com.local.DeepSeekUsageMonitor", account: String = "deepseek-api-key") {
+    init(
+        service: String = "com.local.DeepSeekUsageMonitor",
+        account: String = "deepseek-api-key",
+        accessGroup: String? = KeychainSecretStore.sharedAccessGroup()
+    ) {
         self.service = service
         self.account = account
+        self.accessGroup = accessGroup
     }
 
     func readAPIKey() throws -> String? {
-        var query = baseQuery()
-        query[kSecReturnData as String] = true
-        query[kSecMatchLimit as String] = kSecMatchLimitOne
+        var lastError: OSStatus?
+        for queryAccessGroup in queryAccessGroups {
+            var query = baseQuery(accessGroup: queryAccessGroup)
+            query[kSecReturnData as String] = true
+            query[kSecMatchLimit as String] = kSecMatchLimitOne
 
-        var item: CFTypeRef?
-        let status = SecItemCopyMatching(query as CFDictionary, &item)
-        if status == errSecItemNotFound {
-            return nil
+            var item: CFTypeRef?
+            let status = SecItemCopyMatching(query as CFDictionary, &item)
+            if status == errSecItemNotFound || status == errSecMissingEntitlement {
+                lastError = status
+                continue
+            }
+            guard status == errSecSuccess else {
+                throw SecretStoreError.keychainStatus(status)
+            }
+            guard let data = item as? Data, let value = String(data: data, encoding: .utf8) else {
+                throw SecretStoreError.invalidData
+            }
+            if queryAccessGroup == nil, let accessGroup {
+                _ = saveAPIKeyData(data, accessGroup: accessGroup)
+            }
+            return value
         }
-        guard status == errSecSuccess else {
-            throw SecretStoreError.keychainStatus(status)
+        if let lastError, lastError != errSecItemNotFound && lastError != errSecMissingEntitlement {
+            throw SecretStoreError.keychainStatus(lastError)
         }
-        guard let data = item as? Data, let value = String(data: data, encoding: .utf8) else {
-            throw SecretStoreError.invalidData
-        }
-        return value
+        return nil
     }
 
     func saveAPIKey(_ apiKey: String) throws {
         let data = Data(apiKey.utf8)
-        let query = baseQuery()
-        let attributes: [String: Any] = [
-            kSecValueData as String: data
-        ]
+        var firstError: OSStatus?
+
+        for accessGroup in queryAccessGroups {
+            let status = saveAPIKeyData(data, accessGroup: accessGroup)
+            if status == errSecSuccess {
+                return
+            }
+            if status != errSecMissingEntitlement {
+                firstError = firstError ?? status
+            }
+        }
+
+        if let firstError {
+            throw SecretStoreError.keychainStatus(firstError)
+        }
+        throw SecretStoreError.keychainStatus(errSecMissingEntitlement)
+    }
+
+    private func saveAPIKeyData(_ data: Data, accessGroup: String?) -> OSStatus {
+        let query = baseQuery(accessGroup: accessGroup)
+        let attributes: [String: Any] = [kSecValueData as String: data]
 
         let updateStatus = SecItemUpdate(query as CFDictionary, attributes as CFDictionary)
-        if updateStatus == errSecSuccess {
-            return
+        if updateStatus == errSecSuccess || updateStatus == errSecMissingEntitlement {
+            return updateStatus
         }
         guard updateStatus == errSecItemNotFound else {
-            throw SecretStoreError.keychainStatus(updateStatus)
+            return updateStatus
         }
 
         var addQuery = query
@@ -69,23 +103,40 @@ final class KeychainSecretStore: SecretStoring {
         addQuery[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
 
         let addStatus = SecItemAdd(addQuery as CFDictionary, nil)
-        guard addStatus == errSecSuccess else {
-            throw SecretStoreError.keychainStatus(addStatus)
-        }
+        return addStatus
     }
 
     func clearAPIKey() throws {
-        let status = SecItemDelete(baseQuery() as CFDictionary)
-        guard status == errSecSuccess || status == errSecItemNotFound else {
-            throw SecretStoreError.keychainStatus(status)
+        for accessGroup in queryAccessGroups {
+            let status = SecItemDelete(baseQuery(accessGroup: accessGroup) as CFDictionary)
+            guard status == errSecSuccess || status == errSecItemNotFound || status == errSecMissingEntitlement else {
+                throw SecretStoreError.keychainStatus(status)
+            }
         }
     }
 
-    private func baseQuery() -> [String: Any] {
-        [
+    private var queryAccessGroups: [String?] {
+        if let accessGroup {
+            return [accessGroup, nil]
+        }
+        return [nil]
+    }
+
+    private func baseQuery(accessGroup: String?) -> [String: Any] {
+        var query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,
             kSecAttrAccount as String: account
         ]
+        if let accessGroup {
+            query[kSecAttrAccessGroup as String] = accessGroup
+        }
+        return query
+    }
+
+    static func sharedAccessGroup() -> String? {
+        let configuredPrefix = Bundle.main.object(forInfoDictionaryKey: "AppIdentifierPrefix") as? String
+        let prefix = configuredPrefix?.isEmpty == false ? configuredPrefix! : "V6PB5KA8AG."
+        return "\(prefix)com.local.DeepSeekUsageMonitor.shared"
     }
 }

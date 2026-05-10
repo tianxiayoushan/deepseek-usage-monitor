@@ -35,6 +35,7 @@ struct DeepSeekBalanceClient: BalanceFetching {
     func fetchBalance(apiKey: String) async throws -> BalanceSnapshot {
         var request = URLRequest(url: endpoint)
         request.httpMethod = "GET"
+        request.timeoutInterval = 12
         request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Accept")
 

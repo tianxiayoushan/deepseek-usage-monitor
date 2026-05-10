@@ -8,6 +8,9 @@ private struct UsageEntry: TimelineEntry {
 
 private struct UsageProvider: TimelineProvider {
     private let snapshotStore = SharedDashboardSnapshotStore()
+    private let secretStore = KeychainSecretStore()
+    private let balanceClient = DeepSeekBalanceClient()
+    private let minimumWidgetRefreshSeconds = 15 * 60
 
     func placeholder(in context: Context) -> UsageEntry {
         UsageEntry(date: Date(), snapshot: .placeholder)
@@ -19,11 +22,45 @@ private struct UsageProvider: TimelineProvider {
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<UsageEntry>) -> Void) {
-        let snapshot = snapshotStore.load() ?? .placeholder
-        let now = Date()
-        let entryDate = snapshot.lastUpdatedAt > Date(timeIntervalSince1970: 1) ? snapshot.lastUpdatedAt : now
-        let nextRefresh = now.addingTimeInterval(TimeInterval(max(snapshot.refreshIntervalSeconds, 5)))
-        completion(Timeline(entries: [UsageEntry(date: entryDate, snapshot: snapshot)], policy: .after(nextRefresh)))
+        Task {
+            let snapshot = await refreshedSnapshot()
+            let now = Date()
+            let entryDate = snapshot.lastUpdatedAt > Date(timeIntervalSince1970: 1) ? snapshot.lastUpdatedAt : now
+            let nextRefreshSeconds = max(snapshot.refreshIntervalSeconds, minimumWidgetRefreshSeconds)
+            let nextRefresh = now.addingTimeInterval(TimeInterval(nextRefreshSeconds))
+            completion(Timeline(entries: [UsageEntry(date: entryDate, snapshot: snapshot)], policy: .after(nextRefresh)))
+        }
+    }
+
+    private func refreshedSnapshot() async -> SharedDashboardSnapshot {
+        let existing = snapshotStore.load() ?? .placeholder
+        guard let apiKey = try? secretStore.readAPIKey()?.trimmingCharacters(in: .whitespacesAndNewlines),
+              !apiKey.isEmpty else {
+            return existing
+        }
+
+        do {
+            let balance = try await balanceClient.fetchBalance(apiKey: apiKey)
+            var snapshot = existing
+            snapshot.balance = balance.totalBalance
+            snapshot.maxBalance = max(existing.maxBalance, roundedMaxBalance(for: balance.totalBalance))
+            snapshot.lastUpdatedAt = Date()
+            snapshot.isLive = true
+            snapshot.statusMessage = "Widget 已刷新"
+            snapshotStore.save(snapshot)
+            return snapshot
+        } catch {
+            var snapshot = existing
+            snapshot.isLive = false
+            snapshot.statusMessage = "Widget 刷新失败"
+            snapshotStore.save(snapshot)
+            return snapshot
+        }
+    }
+
+    private func roundedMaxBalance(for balance: Double) -> Double {
+        guard balance > 100 else { return 100 }
+        return ceil((balance * 1.2) / 10) * 10
     }
 }
 

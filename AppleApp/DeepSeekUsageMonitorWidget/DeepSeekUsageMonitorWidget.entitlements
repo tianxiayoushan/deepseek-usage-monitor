@@ -6,5 +6,9 @@
 	<array>
 		<string>group.com.local.DeepSeekUsageMonitor</string>
 	</array>
+	<key>keychain-access-groups</key>
+	<array>
+		<string>$(AppIdentifierPrefix)com.local.DeepSeekUsageMonitor.shared</string>
+	</array>
 </dict>
 </plist>

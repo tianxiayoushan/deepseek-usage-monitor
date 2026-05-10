@@ -33,6 +33,7 @@
 		00000000000000000000022A /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000010A /* Formatters.swift */; };
 		00000000000000000000022B /* MonitorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000010B /* MonitorPalette.swift */; };
 		00000000000000000000022C /* SharedDashboardSnapshotStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000010C /* SharedDashboardSnapshotStore.swift */; };
+		00000000000000000000022D /* BackgroundRefreshScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000010E /* BackgroundRefreshScheduler.swift */; };
 		000000000000000000000240 /* DashboardModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000101 /* DashboardModels.swift */; };
 		000000000000000000000241 /* DeepSeekBalanceClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000102 /* DeepSeekBalanceClient.swift */; };
 		000000000000000000000242 /* SecretStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000103 /* SecretStore.swift */; };
@@ -49,6 +50,9 @@
 		000000000000000000000261 /* DeepSeekUsageMonitorWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000141 /* DeepSeekUsageMonitorWidget.swift */; };
 		000000000000000000000262 /* DeepSeekUsageMonitorWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 000000000000000000000133 /* DeepSeekUsageMonitorWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		000000000000000000000263 /* SharedDashboardSnapshotStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000010C /* SharedDashboardSnapshotStore.swift */; };
+		000000000000000000000264 /* DashboardModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000101 /* DashboardModels.swift */; };
+		000000000000000000000265 /* DeepSeekBalanceClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000102 /* DeepSeekBalanceClient.swift */; };
+		000000000000000000000266 /* SecretStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000103 /* SecretStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +94,8 @@
 		00000000000000000000010B /* MonitorPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorPalette.swift; sourceTree = "<group>"; };
 		00000000000000000000010C /* SharedDashboardSnapshotStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDashboardSnapshotStore.swift; sourceTree = "<group>"; };
 		00000000000000000000010D /* DeepSeekUsageMonitor-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "DeepSeekUsageMonitor-iOS.entitlements"; sourceTree = "<group>"; };
+		00000000000000000000010E /* BackgroundRefreshScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundRefreshScheduler.swift; sourceTree = "<group>"; };
+		00000000000000000000010F /* iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iOS-Info.plist"; sourceTree = "<group>"; };
 		000000000000000000000120 /* DeepSeekBalanceClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepSeekBalanceClientTests.swift; sourceTree = "<group>"; };
 		000000000000000000000121 /* DashboardStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardStoreTests.swift; sourceTree = "<group>"; };
 		000000000000000000000122 /* SettingsStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStoreTests.swift; sourceTree = "<group>"; };
@@ -136,6 +142,7 @@
 				000000000000000000000015 /* Views */,
 				000000000000000000000016 /* Support */,
 				00000000000000000000010D /* DeepSeekUsageMonitor-iOS.entitlements */,
+				00000000000000000000010F /* iOS-Info.plist */,
 			);
 			path = DeepSeekUsageMonitor;
 			sourceTree = "<group>";
@@ -161,6 +168,7 @@
 			children = (
 				000000000000000000000102 /* DeepSeekBalanceClient.swift */,
 				000000000000000000000103 /* SecretStore.swift */,
+				00000000000000000000010E /* BackgroundRefreshScheduler.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -380,6 +388,7 @@
 				00000000000000000000020A /* Formatters.swift in Sources */,
 				00000000000000000000020B /* MonitorPalette.swift in Sources */,
 				00000000000000000000020C /* SharedDashboardSnapshotStore.swift in Sources */,
+				00000000000000000000022D /* BackgroundRefreshScheduler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,6 +438,9 @@
 				000000000000000000000260 /* DeepSeekUsageMonitorWidgetBundle.swift in Sources */,
 				000000000000000000000261 /* DeepSeekUsageMonitorWidget.swift in Sources */,
 				000000000000000000000263 /* SharedDashboardSnapshotStore.swift in Sources */,
+				000000000000000000000264 /* DashboardModels.swift in Sources */,
+				000000000000000000000265 /* DeepSeekBalanceClient.swift in Sources */,
+				000000000000000000000266 /* SecretStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,12 +548,8 @@
 				CODE_SIGN_ENTITLEMENTS = "DeepSeekUsageMonitor/DeepSeekUsageMonitor-iOS.entitlements";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = V6PB5KA8AG;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "DeepSeek Monitor";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "DeepSeekUsageMonitor/iOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.local.DeepSeekUsageMonitor.ios;
@@ -563,12 +571,8 @@
 				CODE_SIGN_ENTITLEMENTS = "DeepSeekUsageMonitor/DeepSeekUsageMonitor-iOS.entitlements";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = V6PB5KA8AG;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "DeepSeek Monitor";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "DeepSeekUsageMonitor/iOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.local.DeepSeekUsageMonitor.ios;

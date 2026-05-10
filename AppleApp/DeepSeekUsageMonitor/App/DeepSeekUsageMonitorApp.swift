@@ -6,6 +6,10 @@ struct DeepSeekUsageMonitorApp: App {
     @State private var dashboardStore: DashboardStore
 
     init() {
+        #if os(iOS)
+        BackgroundRefreshScheduler.register()
+        #endif
+
         let settings = SettingsStore()
         let secrets = KeychainSecretStore()
         _settingsStore = State(initialValue: settings)
@@ -21,13 +25,6 @@ struct DeepSeekUsageMonitorApp: App {
                 .preferredColorScheme(settingsStore.preferredColorScheme)
         }
         .defaultSize(width: 1120, height: 760)
-
-        Settings {
-            SettingsView()
-                .environment(settingsStore)
-                .environment(dashboardStore)
-                .preferredColorScheme(settingsStore.preferredColorScheme)
-        }
         #else
         WindowGroup {
             ContentView()

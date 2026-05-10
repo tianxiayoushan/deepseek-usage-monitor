@@ -1,6 +1,6 @@
 import Foundation
 import Observation
-#if canImport(WidgetKit)
+#if os(iOS) && canImport(WidgetKit)
 import WidgetKit
 #endif
 
@@ -144,8 +144,9 @@ final class DashboardStore {
             statusMessage: statusMessage
         )
         snapshotStore.save(snapshot)
-        #if canImport(WidgetKit)
+        #if os(iOS) && canImport(WidgetKit)
         WidgetCenter.shared.reloadTimelines(ofKind: "DeepSeekUsageMonitorWidget")
+        BackgroundRefreshScheduler.schedule(refreshIntervalSeconds: settings.refreshInterval.seconds)
         #endif
     }
 }

@@ -18,7 +18,7 @@ struct ContentView: View {
                 GeometryReader { proxy in
                     if isFocusMode {
                         FocusDashboardView()
-                    } else if proxy.size.width >= 900 {
+                    } else if usesDesktopLayout(for: proxy.size) {
                         DesktopDashboardView()
                     } else {
                         MobileDashboardView()
@@ -32,24 +32,32 @@ struct ContentView: View {
             .toolbar { dashboardToolbar }
         }
         #if os(macOS)
-        .frame(minWidth: 960, minHeight: 640)
+        .frame(minWidth: 760, minHeight: 560)
         #endif
-        #if os(iOS)
         .sheet(isPresented: $showingSettings) {
             NavigationStack {
                 SettingsView()
             }
+            #if os(iOS)
             .presentationDetents([.medium, .large])
+            #else
+            .frame(minWidth: 520, idealWidth: 560, minHeight: 520, idealHeight: 640)
+            #endif
         }
-        #endif
         .task {
             dashboard.startAutoRefresh()
+            #if os(iOS)
+            BackgroundRefreshScheduler.schedule(refreshIntervalSeconds: settings.refreshInterval.seconds)
+            #endif
         }
         .onDisappear {
             dashboard.stopAutoRefresh()
         }
         .onChange(of: settings.refreshInterval) { _, _ in
             dashboard.restartAutoRefresh()
+            #if os(iOS)
+            BackgroundRefreshScheduler.schedule(refreshIntervalSeconds: settings.refreshInterval.seconds)
+            #endif
         }
         .onReceive(Timer.publish(every: 1, on: .main, in: .common).autoconnect()) { _ in
             dashboard.tickUptime()
@@ -87,17 +95,11 @@ struct ContentView: View {
             }
             .help(settings.language.text(.focusMode))
 
-            #if os(iOS)
             Button {
                 showingSettings = true
             } label: {
                 Label(settings.language.text(.settings), systemImage: "gearshape")
             }
-            #else
-            SettingsLink {
-                Label(settings.language.text(.settings), systemImage: "gearshape")
-            }
-            #endif
         }
     }
 
@@ -122,5 +124,13 @@ struct ContentView: View {
         case .system:
             settings.appTheme = .dark
         }
+    }
+
+    private func usesDesktopLayout(for size: CGSize) -> Bool {
+        #if os(macOS)
+        size.width >= 980 && size.height >= 560
+        #else
+        size.width >= 900
+        #endif
     }
 }

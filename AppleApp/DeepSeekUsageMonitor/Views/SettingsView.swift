@@ -25,64 +25,136 @@ struct SettingsView: View {
     var body: some View {
         @Bindable var settings = settings
 
-        Form {
-            Section {
-                HStack {
-                    Label(settings.language.text(.deepseekApiKey), systemImage: "key.fill")
-                    Spacer()
-                    Text(dashboard.apiKeyConfigured ? settings.language.text(.configuredLocally) : settings.language.text(.notConfigured))
-                        .foregroundStyle(dashboard.apiKeyConfigured ? palette.accent : palette.muted)
-                }
-                SecureField(settings.language.text(.enterNewApiKey), text: $apiKeyInput)
-                    .textContentType(.password)
-                Button(role: .destructive) {
-                    clearKey()
-                } label: {
-                    Label(settings.language.text(.clearKey), systemImage: "trash")
-                }
-                .disabled(!dashboard.apiKeyConfigured)
-            } header: {
-                Text(settings.language.text(.deepseekApiKey))
-            }
+        Group {
+            #if os(macOS)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 18) {
+                    MacSettingsSection(title: settings.language.text(.deepseekApiKey)) {
+                        HStack {
+                            Label(settings.language.text(.deepseekApiKey), systemImage: "key.fill")
+                            Spacer()
+                            Text(dashboard.apiKeyConfigured ? settings.language.text(.configuredLocally) : settings.language.text(.notConfigured))
+                                .foregroundStyle(dashboard.apiKeyConfigured ? palette.accent : palette.muted)
+                        }
+                        SecureField(settings.language.text(.enterNewApiKey), text: $apiKeyInput)
+                            .textFieldStyle(.roundedBorder)
+                        HStack {
+                            Button(role: .destructive) {
+                                clearKey()
+                            } label: {
+                                Label(settings.language.text(.clearKey), systemImage: "trash")
+                            }
+                            .disabled(!dashboard.apiKeyConfigured)
+                            Spacer()
+                        }
+                    }
 
-            Section {
-                TextField("80.00", text: $creditInput)
-                Stepper(value: $settings.gaugeMaxAmount, in: 100...1000, step: 100) {
-                    HStack {
-                        Text(settings.language.text(.gaugeRange))
-                        Spacer()
-                        Text("MAX \(Int(settings.gaugeMaxAmount)) CNY")
-                            .font(.system(.caption, design: .monospaced))
+                    MacSettingsSection(title: settings.language.text(.initialTotalCredit)) {
+                        TextField("80.00", text: $creditInput)
+                            .textFieldStyle(.roundedBorder)
+                        Stepper(value: $settings.gaugeMaxAmount, in: 100...1000, step: 100) {
+                            HStack {
+                                Text(settings.language.text(.gaugeRange))
+                                Spacer()
+                                Text("MAX \(Int(settings.gaugeMaxAmount)) CNY")
+                                    .font(.system(.caption, design: .monospaced))
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                        Picker(settings.language.text(.refreshInterval), selection: $settings.refreshInterval) {
+                            ForEach(RefreshInterval.allCases) { interval in
+                                Text("\(interval.seconds)s").tag(interval)
+                            }
+                        }
+                        .pickerStyle(.menu)
+                        Text(settings.language.text(.estimateNote))
+                            .font(.footnote)
                             .foregroundStyle(.secondary)
                     }
-                }
-                Picker(settings.language.text(.refreshInterval), selection: $settings.refreshInterval) {
-                    ForEach(RefreshInterval.allCases) { interval in
-                        Text("\(interval.seconds)s").tag(interval)
+
+                    MacSettingsSection(title: settings.language.text(.settings)) {
+                        Picker(settings.language.text(.language), selection: $settings.language) {
+                            Text("中文").tag(AppLanguage.zh)
+                            Text("English").tag(AppLanguage.en)
+                        }
+                        .pickerStyle(.segmented)
+                        Picker(settings.language.text(.theme), selection: $settings.appTheme) {
+                            Text(settings.language.text(.dark)).tag(AppTheme.dark)
+                            Text(settings.language.text(.light)).tag(AppTheme.light)
+                            Text(settings.language.text(.system)).tag(AppTheme.system)
+                        }
+                        .pickerStyle(.segmented)
+                    }
+
+                    if let validationMessage {
+                        Text(validationMessage)
+                            .foregroundStyle(palette.warning)
                     }
                 }
-            } header: {
-                Text(settings.language.text(.initialTotalCredit))
-            } footer: {
-                Text(settings.language.text(.estimateNote))
+                .padding(24)
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-
-            Section {
-                Picker(settings.language.text(.language), selection: $settings.language) {
-                    Text("中文").tag(AppLanguage.zh)
-                    Text("English").tag(AppLanguage.en)
+            #else
+            Form {
+                Section {
+                    HStack {
+                        Label(settings.language.text(.deepseekApiKey), systemImage: "key.fill")
+                        Spacer()
+                        Text(dashboard.apiKeyConfigured ? settings.language.text(.configuredLocally) : settings.language.text(.notConfigured))
+                            .foregroundStyle(dashboard.apiKeyConfigured ? palette.accent : palette.muted)
+                    }
+                    SecureField(settings.language.text(.enterNewApiKey), text: $apiKeyInput)
+                        .textContentType(.password)
+                    Button(role: .destructive) {
+                        clearKey()
+                    } label: {
+                        Label(settings.language.text(.clearKey), systemImage: "trash")
+                    }
+                    .disabled(!dashboard.apiKeyConfigured)
+                } header: {
+                    Text(settings.language.text(.deepseekApiKey))
                 }
-                Picker(settings.language.text(.theme), selection: $settings.appTheme) {
-                    Text(settings.language.text(.dark)).tag(AppTheme.dark)
-                    Text(settings.language.text(.light)).tag(AppTheme.light)
-                    Text(settings.language.text(.system)).tag(AppTheme.system)
+
+                Section {
+                    TextField("80.00", text: $creditInput)
+                    Stepper(value: $settings.gaugeMaxAmount, in: 100...1000, step: 100) {
+                        HStack {
+                            Text(settings.language.text(.gaugeRange))
+                            Spacer()
+                            Text("MAX \(Int(settings.gaugeMaxAmount)) CNY")
+                                .font(.system(.caption, design: .monospaced))
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    Picker(settings.language.text(.refreshInterval), selection: $settings.refreshInterval) {
+                        ForEach(RefreshInterval.allCases) { interval in
+                            Text("\(interval.seconds)s").tag(interval)
+                        }
+                    }
+                } header: {
+                    Text(settings.language.text(.initialTotalCredit))
+                } footer: {
+                    Text(settings.language.text(.estimateNote))
+                }
+
+                Section {
+                    Picker(settings.language.text(.language), selection: $settings.language) {
+                        Text("中文").tag(AppLanguage.zh)
+                        Text("English").tag(AppLanguage.en)
+                    }
+                    Picker(settings.language.text(.theme), selection: $settings.appTheme) {
+                        Text(settings.language.text(.dark)).tag(AppTheme.dark)
+                        Text(settings.language.text(.light)).tag(AppTheme.light)
+                        Text(settings.language.text(.system)).tag(AppTheme.system)
+                    }
+                }
+
+                if let validationMessage {
+                    Text(validationMessage)
+                        .foregroundStyle(palette.warning)
                 }
             }
-
-            if let validationMessage {
-                Text(validationMessage)
-                    .foregroundStyle(palette.warning)
-            }
+            #endif
         }
         .navigationTitle(settings.language.text(.settings))
         .toolbar {
@@ -92,11 +164,9 @@ struct SettingsView: View {
                 }
                 .disabled(saveState == .saving)
             }
-            #if os(iOS)
             ToolbarItem(placement: .cancellationAction) {
-                Button("Done") { dismiss() }
+                Button(settings.language == .zh ? "完成" : "Done") { dismiss() }
             }
-            #endif
         }
         .onAppear {
             if let initialTotalCredit = settings.initialTotalCredit {
@@ -154,3 +224,24 @@ struct SettingsView: View {
         }
     }
 }
+
+#if os(macOS)
+private struct MacSettingsSection<Content: View>: View {
+    let title: String
+    @ViewBuilder var content: Content
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(title)
+                .font(.headline)
+            VStack(alignment: .leading, spacing: 12) {
+                content
+            }
+            .padding(14)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(.quaternary.opacity(0.35))
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+        }
+    }
+}
+#endif
