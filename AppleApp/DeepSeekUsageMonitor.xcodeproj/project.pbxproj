@@ -1,0 +1,777 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		000000000000000000000200 /* DeepSeekUsageMonitorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000100 /* DeepSeekUsageMonitorApp.swift */; };
+		000000000000000000000201 /* DashboardModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000101 /* DashboardModels.swift */; };
+		000000000000000000000202 /* DeepSeekBalanceClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000102 /* DeepSeekBalanceClient.swift */; };
+		000000000000000000000203 /* SecretStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000103 /* SecretStore.swift */; };
+		000000000000000000000204 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000104 /* SettingsStore.swift */; };
+		000000000000000000000205 /* DashboardStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000105 /* DashboardStore.swift */; };
+		000000000000000000000206 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000106 /* ContentView.swift */; };
+		000000000000000000000207 /* DashboardViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000107 /* DashboardViews.swift */; };
+		000000000000000000000208 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000108 /* SettingsView.swift */; };
+		000000000000000000000209 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000109 /* Localization.swift */; };
+		00000000000000000000020A /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000010A /* Formatters.swift */; };
+		00000000000000000000020B /* MonitorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000010B /* MonitorPalette.swift */; };
+		00000000000000000000020C /* SharedDashboardSnapshotStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000010C /* SharedDashboardSnapshotStore.swift */; };
+		000000000000000000000220 /* DeepSeekUsageMonitorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000100 /* DeepSeekUsageMonitorApp.swift */; };
+		000000000000000000000221 /* DashboardModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000101 /* DashboardModels.swift */; };
+		000000000000000000000222 /* DeepSeekBalanceClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000102 /* DeepSeekBalanceClient.swift */; };
+		000000000000000000000223 /* SecretStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000103 /* SecretStore.swift */; };
+		000000000000000000000224 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000104 /* SettingsStore.swift */; };
+		000000000000000000000225 /* DashboardStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000105 /* DashboardStore.swift */; };
+		000000000000000000000226 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000106 /* ContentView.swift */; };
+		000000000000000000000227 /* DashboardViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000107 /* DashboardViews.swift */; };
+		000000000000000000000228 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000108 /* SettingsView.swift */; };
+		000000000000000000000229 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000109 /* Localization.swift */; };
+		00000000000000000000022A /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000010A /* Formatters.swift */; };
+		00000000000000000000022B /* MonitorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000010B /* MonitorPalette.swift */; };
+		00000000000000000000022C /* SharedDashboardSnapshotStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000010C /* SharedDashboardSnapshotStore.swift */; };
+		000000000000000000000240 /* DashboardModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000101 /* DashboardModels.swift */; };
+		000000000000000000000241 /* DeepSeekBalanceClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000102 /* DeepSeekBalanceClient.swift */; };
+		000000000000000000000242 /* SecretStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000103 /* SecretStore.swift */; };
+		000000000000000000000243 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000104 /* SettingsStore.swift */; };
+		000000000000000000000244 /* DashboardStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000105 /* DashboardStore.swift */; };
+		000000000000000000000245 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000109 /* Localization.swift */; };
+		000000000000000000000246 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000010A /* Formatters.swift */; };
+		000000000000000000000247 /* DeepSeekBalanceClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000120 /* DeepSeekBalanceClientTests.swift */; };
+		000000000000000000000248 /* DashboardStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000121 /* DashboardStoreTests.swift */; };
+		000000000000000000000249 /* SettingsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000122 /* SettingsStoreTests.swift */; };
+		00000000000000000000024A /* KeychainSecretStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000123 /* KeychainSecretStoreTests.swift */; };
+		00000000000000000000024B /* SharedDashboardSnapshotStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000010C /* SharedDashboardSnapshotStore.swift */; };
+		000000000000000000000260 /* DeepSeekUsageMonitorWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000140 /* DeepSeekUsageMonitorWidgetBundle.swift */; };
+		000000000000000000000261 /* DeepSeekUsageMonitorWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000141 /* DeepSeekUsageMonitorWidget.swift */; };
+		000000000000000000000262 /* DeepSeekUsageMonitorWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 000000000000000000000133 /* DeepSeekUsageMonitorWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		000000000000000000000263 /* SharedDashboardSnapshotStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000010C /* SharedDashboardSnapshotStore.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		000000000000000000000034 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 000000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 000000000000000000000033;
+			remoteInfo = DeepSeekUsageMonitorWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		000000000000000000000302 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				000000000000000000000262 /* DeepSeekUsageMonitorWidgetExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		000000000000000000000100 /* DeepSeekUsageMonitorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepSeekUsageMonitorApp.swift; sourceTree = "<group>"; };
+		000000000000000000000101 /* DashboardModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardModels.swift; sourceTree = "<group>"; };
+		000000000000000000000102 /* DeepSeekBalanceClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepSeekBalanceClient.swift; sourceTree = "<group>"; };
+		000000000000000000000103 /* SecretStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretStore.swift; sourceTree = "<group>"; };
+		000000000000000000000104 /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
+		000000000000000000000105 /* DashboardStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardStore.swift; sourceTree = "<group>"; };
+		000000000000000000000106 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		000000000000000000000107 /* DashboardViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViews.swift; sourceTree = "<group>"; };
+		000000000000000000000108 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		000000000000000000000109 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
+		00000000000000000000010A /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
+		00000000000000000000010B /* MonitorPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorPalette.swift; sourceTree = "<group>"; };
+		00000000000000000000010C /* SharedDashboardSnapshotStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDashboardSnapshotStore.swift; sourceTree = "<group>"; };
+		00000000000000000000010D /* DeepSeekUsageMonitor-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "DeepSeekUsageMonitor-iOS.entitlements"; sourceTree = "<group>"; };
+		000000000000000000000120 /* DeepSeekBalanceClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepSeekBalanceClientTests.swift; sourceTree = "<group>"; };
+		000000000000000000000121 /* DashboardStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardStoreTests.swift; sourceTree = "<group>"; };
+		000000000000000000000122 /* SettingsStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStoreTests.swift; sourceTree = "<group>"; };
+		000000000000000000000123 /* KeychainSecretStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainSecretStoreTests.swift; sourceTree = "<group>"; };
+		000000000000000000000130 /* DeepSeekUsageMonitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeepSeekUsageMonitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		000000000000000000000131 /* DeepSeekUsageMonitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeepSeekUsageMonitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		000000000000000000000132 /* DeepSeekUsageMonitorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DeepSeekUsageMonitorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		000000000000000000000133 /* DeepSeekUsageMonitorWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DeepSeekUsageMonitorWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		000000000000000000000140 /* DeepSeekUsageMonitorWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepSeekUsageMonitorWidgetBundle.swift; sourceTree = "<group>"; };
+		000000000000000000000141 /* DeepSeekUsageMonitorWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepSeekUsageMonitorWidget.swift; sourceTree = "<group>"; };
+		000000000000000000000142 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		000000000000000000000143 /* DeepSeekUsageMonitorWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DeepSeekUsageMonitorWidget.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		000000000000000000000002 = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000010 /* DeepSeekUsageMonitor */,
+				000000000000000000000017 /* DeepSeekUsageMonitorWidget */,
+				000000000000000000000020 /* DeepSeekUsageMonitorTests */,
+				000000000000000000000003 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		000000000000000000000003 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000130 /* DeepSeekUsageMonitor.app */,
+				000000000000000000000131 /* DeepSeekUsageMonitor.app */,
+				000000000000000000000132 /* DeepSeekUsageMonitorTests.xctest */,
+				000000000000000000000133 /* DeepSeekUsageMonitorWidgetExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		000000000000000000000010 /* DeepSeekUsageMonitor */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000011 /* App */,
+				000000000000000000000012 /* Models */,
+				000000000000000000000013 /* Services */,
+				000000000000000000000014 /* Stores */,
+				000000000000000000000015 /* Views */,
+				000000000000000000000016 /* Support */,
+				00000000000000000000010D /* DeepSeekUsageMonitor-iOS.entitlements */,
+			);
+			path = DeepSeekUsageMonitor;
+			sourceTree = "<group>";
+		};
+		000000000000000000000011 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000100 /* DeepSeekUsageMonitorApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		000000000000000000000012 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000101 /* DashboardModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		000000000000000000000013 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000102 /* DeepSeekBalanceClient.swift */,
+				000000000000000000000103 /* SecretStore.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		000000000000000000000014 /* Stores */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000104 /* SettingsStore.swift */,
+				000000000000000000000105 /* DashboardStore.swift */,
+			);
+			path = Stores;
+			sourceTree = "<group>";
+		};
+		000000000000000000000015 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000106 /* ContentView.swift */,
+				000000000000000000000107 /* DashboardViews.swift */,
+				000000000000000000000108 /* SettingsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		000000000000000000000016 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000109 /* Localization.swift */,
+				00000000000000000000010A /* Formatters.swift */,
+				00000000000000000000010B /* MonitorPalette.swift */,
+				00000000000000000000010C /* SharedDashboardSnapshotStore.swift */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		000000000000000000000017 /* DeepSeekUsageMonitorWidget */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000140 /* DeepSeekUsageMonitorWidgetBundle.swift */,
+				000000000000000000000141 /* DeepSeekUsageMonitorWidget.swift */,
+				000000000000000000000142 /* Info.plist */,
+				000000000000000000000143 /* DeepSeekUsageMonitorWidget.entitlements */,
+			);
+			path = DeepSeekUsageMonitorWidget;
+			sourceTree = "<group>";
+		};
+		000000000000000000000020 /* DeepSeekUsageMonitorTests */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000120 /* DeepSeekBalanceClientTests.swift */,
+				000000000000000000000121 /* DashboardStoreTests.swift */,
+				000000000000000000000122 /* SettingsStoreTests.swift */,
+				000000000000000000000123 /* KeychainSecretStoreTests.swift */,
+			);
+			path = DeepSeekUsageMonitorTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		000000000000000000000030 /* DeepSeekUsageMonitor iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 000000000000000000000330 /* Build configuration list for PBXNativeTarget "DeepSeekUsageMonitor iOS" */;
+			buildPhases = (
+				000000000000000000000300 /* Sources */,
+				000000000000000000000301 /* Resources */,
+				000000000000000000000302 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				000000000000000000000035 /* PBXTargetDependency */,
+			);
+			name = "DeepSeekUsageMonitor iOS";
+			productName = DeepSeekUsageMonitor;
+			productReference = 000000000000000000000130 /* DeepSeekUsageMonitor.app */;
+			productType = "com.apple.product-type.application";
+		};
+		000000000000000000000031 /* DeepSeekUsageMonitor macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 000000000000000000000331 /* Build configuration list for PBXNativeTarget "DeepSeekUsageMonitor macOS" */;
+			buildPhases = (
+				000000000000000000000310 /* Sources */,
+				000000000000000000000311 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "DeepSeekUsageMonitor macOS";
+			productName = DeepSeekUsageMonitor;
+			productReference = 000000000000000000000131 /* DeepSeekUsageMonitor.app */;
+			productType = "com.apple.product-type.application";
+		};
+		000000000000000000000032 /* DeepSeekUsageMonitorTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 000000000000000000000332 /* Build configuration list for PBXNativeTarget "DeepSeekUsageMonitorTests" */;
+			buildPhases = (
+				000000000000000000000320 /* Sources */,
+				000000000000000000000321 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DeepSeekUsageMonitorTests;
+			productName = DeepSeekUsageMonitorTests;
+			productReference = 000000000000000000000132 /* DeepSeekUsageMonitorTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		000000000000000000000033 /* DeepSeekUsageMonitorWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 000000000000000000000334 /* Build configuration list for PBXNativeTarget "DeepSeekUsageMonitorWidgetExtension" */;
+			buildPhases = (
+				000000000000000000000304 /* Sources */,
+				000000000000000000000305 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DeepSeekUsageMonitorWidgetExtension;
+			productName = DeepSeekUsageMonitorWidgetExtension;
+			productReference = 000000000000000000000133 /* DeepSeekUsageMonitorWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		000000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1640;
+				LastUpgradeCheck = 1640;
+				TargetAttributes = {
+					000000000000000000000030 = {
+						CreatedOnToolsVersion = 26.4.1;
+					};
+					000000000000000000000031 = {
+						CreatedOnToolsVersion = 26.4.1;
+					};
+					000000000000000000000032 = {
+						CreatedOnToolsVersion = 26.4.1;
+					};
+					000000000000000000000033 = {
+						CreatedOnToolsVersion = 26.4.1;
+					};
+				};
+			};
+			buildConfigurationList = 000000000000000000000333 /* Build configuration list for PBXProject "DeepSeekUsageMonitor" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 000000000000000000000002;
+			productRefGroup = 000000000000000000000003 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				000000000000000000000030 /* DeepSeekUsageMonitor iOS */,
+				000000000000000000000031 /* DeepSeekUsageMonitor macOS */,
+				000000000000000000000032 /* DeepSeekUsageMonitorTests */,
+				000000000000000000000033 /* DeepSeekUsageMonitorWidgetExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		000000000000000000000301 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000000311 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000000321 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000000305 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		000000000000000000000300 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				000000000000000000000200 /* DeepSeekUsageMonitorApp.swift in Sources */,
+				000000000000000000000201 /* DashboardModels.swift in Sources */,
+				000000000000000000000202 /* DeepSeekBalanceClient.swift in Sources */,
+				000000000000000000000203 /* SecretStore.swift in Sources */,
+				000000000000000000000204 /* SettingsStore.swift in Sources */,
+				000000000000000000000205 /* DashboardStore.swift in Sources */,
+				000000000000000000000206 /* ContentView.swift in Sources */,
+				000000000000000000000207 /* DashboardViews.swift in Sources */,
+				000000000000000000000208 /* SettingsView.swift in Sources */,
+				000000000000000000000209 /* Localization.swift in Sources */,
+				00000000000000000000020A /* Formatters.swift in Sources */,
+				00000000000000000000020B /* MonitorPalette.swift in Sources */,
+				00000000000000000000020C /* SharedDashboardSnapshotStore.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000000310 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				000000000000000000000220 /* DeepSeekUsageMonitorApp.swift in Sources */,
+				000000000000000000000221 /* DashboardModels.swift in Sources */,
+				000000000000000000000222 /* DeepSeekBalanceClient.swift in Sources */,
+				000000000000000000000223 /* SecretStore.swift in Sources */,
+				000000000000000000000224 /* SettingsStore.swift in Sources */,
+				000000000000000000000225 /* DashboardStore.swift in Sources */,
+				000000000000000000000226 /* ContentView.swift in Sources */,
+				000000000000000000000227 /* DashboardViews.swift in Sources */,
+				000000000000000000000228 /* SettingsView.swift in Sources */,
+				000000000000000000000229 /* Localization.swift in Sources */,
+				00000000000000000000022A /* Formatters.swift in Sources */,
+				00000000000000000000022B /* MonitorPalette.swift in Sources */,
+				00000000000000000000022C /* SharedDashboardSnapshotStore.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000000320 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				000000000000000000000240 /* DashboardModels.swift in Sources */,
+				000000000000000000000241 /* DeepSeekBalanceClient.swift in Sources */,
+				000000000000000000000242 /* SecretStore.swift in Sources */,
+				000000000000000000000243 /* SettingsStore.swift in Sources */,
+				000000000000000000000244 /* DashboardStore.swift in Sources */,
+				000000000000000000000245 /* Localization.swift in Sources */,
+				000000000000000000000246 /* Formatters.swift in Sources */,
+				00000000000000000000024B /* SharedDashboardSnapshotStore.swift in Sources */,
+				000000000000000000000247 /* DeepSeekBalanceClientTests.swift in Sources */,
+				000000000000000000000248 /* DashboardStoreTests.swift in Sources */,
+				000000000000000000000249 /* SettingsStoreTests.swift in Sources */,
+				00000000000000000000024A /* KeychainSecretStoreTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000000304 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				000000000000000000000260 /* DeepSeekUsageMonitorWidgetBundle.swift in Sources */,
+				000000000000000000000261 /* DeepSeekUsageMonitorWidget.swift in Sources */,
+				000000000000000000000263 /* SharedDashboardSnapshotStore.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		000000000000000000000035 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 000000000000000000000033 /* DeepSeekUsageMonitorWidgetExtension */;
+			targetProxy = 000000000000000000000034 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		000000000000000000000400 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		000000000000000000000401 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		000000000000000000000410 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = "DeepSeekUsageMonitor/DeepSeekUsageMonitor-iOS.entitlements";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = V6PB5KA8AG;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "DeepSeek Monitor";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.local.DeepSeekUsageMonitor.ios;
+				PRODUCT_NAME = DeepSeekUsageMonitor;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		000000000000000000000411 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = "DeepSeekUsageMonitor/DeepSeekUsageMonitor-iOS.entitlements";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = V6PB5KA8AG;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "DeepSeek Monitor";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.local.DeepSeekUsageMonitor.ios;
+				PRODUCT_NAME = DeepSeekUsageMonitor;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		000000000000000000000420 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "DeepSeek Monitor";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.local.DeepSeekUsageMonitor.macos;
+				PRODUCT_NAME = DeepSeekUsageMonitor;
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		000000000000000000000421 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "DeepSeek Monitor";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.local.DeepSeekUsageMonitor.macos;
+				PRODUCT_NAME = DeepSeekUsageMonitor;
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		000000000000000000000430 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.local.DeepSeekUsageMonitor.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		000000000000000000000431 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.local.DeepSeekUsageMonitor.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		000000000000000000000440 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = DeepSeekUsageMonitorWidget/DeepSeekUsageMonitorWidget.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = V6PB5KA8AG;
+				INFOPLIST_FILE = DeepSeekUsageMonitorWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.local.DeepSeekUsageMonitor.ios.widget;
+				PRODUCT_NAME = DeepSeekUsageMonitorWidgetExtension;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		000000000000000000000441 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = DeepSeekUsageMonitorWidget/DeepSeekUsageMonitorWidget.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = V6PB5KA8AG;
+				INFOPLIST_FILE = DeepSeekUsageMonitorWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.local.DeepSeekUsageMonitor.ios.widget;
+				PRODUCT_NAME = DeepSeekUsageMonitorWidgetExtension;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		000000000000000000000330 /* Build configuration list for PBXNativeTarget "DeepSeekUsageMonitor iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				000000000000000000000410 /* Debug */,
+				000000000000000000000411 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		000000000000000000000331 /* Build configuration list for PBXNativeTarget "DeepSeekUsageMonitor macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				000000000000000000000420 /* Debug */,
+				000000000000000000000421 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		000000000000000000000332 /* Build configuration list for PBXNativeTarget "DeepSeekUsageMonitorTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				000000000000000000000430 /* Debug */,
+				000000000000000000000431 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		000000000000000000000333 /* Build configuration list for PBXProject "DeepSeekUsageMonitor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				000000000000000000000400 /* Debug */,
+				000000000000000000000401 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		000000000000000000000334 /* Build configuration list for PBXNativeTarget "DeepSeekUsageMonitorWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				000000000000000000000440 /* Debug */,
+				000000000000000000000441 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 000000000000000000000001 /* Project object */;
+}

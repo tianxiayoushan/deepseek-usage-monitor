@@ -36,3 +36,11 @@ __pycache__/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+
+# Apple native app build products
+AppleApp/DerivedData/
+AppleApp/build/
+*.xcuserstate
+xcuserdata/
+*.xcodeproj/project.xcworkspace/
+**/*.xcodeproj/project.xcworkspace/
