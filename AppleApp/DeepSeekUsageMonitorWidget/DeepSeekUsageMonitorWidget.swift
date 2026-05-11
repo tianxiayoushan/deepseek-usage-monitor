@@ -44,9 +44,13 @@ private struct UsageProvider: TimelineProvider {
             var snapshot = existing
             snapshot.balance = balance.totalBalance
             snapshot.maxBalance = max(existing.maxBalance, roundedMaxBalance(for: balance.totalBalance))
+            snapshot.todaySpend = 0
+            snapshot.todayTokens = 0
+            snapshot.todayRequests = 0
+            snapshot.totalSpend = 0
             snapshot.lastUpdatedAt = Date()
             snapshot.isLive = true
-            snapshot.statusMessage = "Widget 已刷新"
+            snapshot.statusMessage = "余额已刷新，用量未提供"
             snapshotStore.save(snapshot)
             return snapshot
         } catch {
@@ -112,6 +116,13 @@ private struct SmallWidget: View {
     let snapshot: SharedDashboardSnapshot
     let palette: WidgetPalette
 
+    private var usageUnavailable: Bool {
+        snapshot.isLive &&
+        snapshot.todaySpend == 0 &&
+        snapshot.todayTokens == 0 &&
+        snapshot.todayRequests == 0
+    }
+
     var body: some View {
         GeometryReader { proxy in
             let side = max(104, min(proxy.size.width, proxy.size.height) - 18)
@@ -139,7 +150,7 @@ private struct SmallWidget: View {
                             .font(.system(size: 8, weight: .semibold, design: .monospaced))
                             .foregroundStyle(palette.label)
                         Spacer(minLength: 4)
-                        Text(formatCNY(snapshot.todaySpend))
+                        Text(usageUnavailable ? "--" : formatCNY(snapshot.todaySpend))
                             .font(.system(size: 11, weight: .bold, design: .monospaced))
                             .foregroundStyle(palette.red)
                             .lineLimit(1)
@@ -158,6 +169,13 @@ private struct MediumWidget: View {
     let date: Date
     let palette: WidgetPalette
 
+    private var usageUnavailable: Bool {
+        snapshot.isLive &&
+        snapshot.todaySpend == 0 &&
+        snapshot.todayTokens == 0 &&
+        snapshot.todayRequests == 0
+    }
+
     var body: some View {
         HStack(spacing: 16) {
             VStack(alignment: .leading, spacing: 12) {
@@ -171,9 +189,9 @@ private struct MediumWidget: View {
                     .foregroundStyle(palette.text)
                     .minimumScaleFactor(0.75)
                 HStack(spacing: 12) {
-                    WidgetMetric(label: "请求", value: "\(snapshot.todayRequests)", palette: palette)
-                    WidgetMetric(label: "Token", value: formatTokens(snapshot.todayTokens), palette: palette)
-                    WidgetMetric(label: "消费", value: formatCNY(snapshot.todaySpend), palette: palette, isRed: true)
+                    WidgetMetric(label: "请求", value: usageUnavailable ? "--" : "\(snapshot.todayRequests)", palette: palette)
+                    WidgetMetric(label: "Token", value: usageUnavailable ? "--" : formatTokens(snapshot.todayTokens), palette: palette)
+                    WidgetMetric(label: "消费", value: usageUnavailable ? "--" : formatCNY(snapshot.todaySpend), palette: palette, isRed: true)
                 }
             }
             MiniGauge(snapshot: snapshot, palette: palette, size: 118)
@@ -186,6 +204,13 @@ private struct LargeWidget: View {
     let snapshot: SharedDashboardSnapshot
     let date: Date
     let palette: WidgetPalette
+
+    private var usageUnavailable: Bool {
+        snapshot.isLive &&
+        snapshot.todaySpend == 0 &&
+        snapshot.todayTokens == 0 &&
+        snapshot.todayRequests == 0
+    }
 
     var body: some View {
         VStack(spacing: 14) {
@@ -200,11 +225,11 @@ private struct LargeWidget: View {
             MiniGauge(snapshot: snapshot, palette: palette, size: 184)
 
             HStack(spacing: 8) {
-                WidgetMetricCard(label: "今日请求", value: "\(snapshot.todayRequests)", palette: palette)
-                WidgetMetricCard(label: "今日 Token", value: formatTokens(snapshot.todayTokens), palette: palette)
+                WidgetMetricCard(label: "今日请求", value: usageUnavailable ? "--" : "\(snapshot.todayRequests)", palette: palette)
+                WidgetMetricCard(label: "今日 Token", value: usageUnavailable ? "--" : formatTokens(snapshot.todayTokens), palette: palette)
             }
             HStack(spacing: 8) {
-                WidgetMetricCard(label: "今日消费", value: formatCNY(snapshot.todaySpend), palette: palette, isRed: true)
+                WidgetMetricCard(label: "今日消费", value: usageUnavailable ? "--" : formatCNY(snapshot.todaySpend), palette: palette, isRed: true)
                 WidgetMetricCard(label: "累计消费", value: formatCNY(snapshot.totalSpend), palette: palette)
             }
         }

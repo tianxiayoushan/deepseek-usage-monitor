@@ -105,16 +105,15 @@ final class DashboardStore {
     }
 
     private func apply(balance: BalanceSnapshot) {
-        var next = DashboardData.mock()
-        next.balance = balance.totalBalance
-        next.maxBalance = settings.displayMaxBalance(for: balance.totalBalance)
-        if let spend = estimatedTotalSpend(balance: balance.totalBalance) {
-            next.totalSpend = spend
-        }
-        next.lastUpdatedAt = Date()
+        let totalSpend = estimatedTotalSpend(balance: balance.totalBalance) ?? 0
+        let next = DashboardData.liveBalanceOnly(
+            balance: balance.totalBalance,
+            maxBalance: settings.displayMaxBalance(for: balance.totalBalance),
+            totalSpend: totalSpend
+        )
         data = next
         isLive = true
-        statusMessage = "\(settings.language.text(.liveBalanceLoaded)) \(settings.language.text(.autoRefresh)) \(settings.refreshInterval.seconds)s"
+        statusMessage = "\(settings.language.text(.liveBalanceLoaded)) \(settings.language.text(.liveUsageUnavailable)) \(settings.language.text(.autoRefresh)) \(settings.refreshInterval.seconds)s"
         lastErrorMessage = nil
         persistSnapshot()
     }

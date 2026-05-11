@@ -55,13 +55,18 @@ enum BackgroundRefreshScheduler {
             var snapshot = snapshotStore.load() ?? .placeholder
             snapshot.balance = balance.totalBalance
             snapshot.maxBalance = settings.displayMaxBalance(for: balance.totalBalance)
+            snapshot.todaySpend = 0
+            snapshot.todayTokens = 0
+            snapshot.todayRequests = 0
             if let initialTotalCredit = settings.initialTotalCredit {
                 snapshot.totalSpend = max(initialTotalCredit - balance.totalBalance, 0)
+            } else {
+                snapshot.totalSpend = 0
             }
             snapshot.lastUpdatedAt = Date()
             snapshot.isLive = true
             snapshot.refreshIntervalSeconds = settings.refreshInterval.seconds
-            snapshot.statusMessage = "后台已刷新"
+            snapshot.statusMessage = "后台余额已刷新，用量未提供"
             snapshotStore.save(snapshot)
             WidgetCenter.shared.reloadTimelines(ofKind: "DeepSeekUsageMonitorWidget")
             return true

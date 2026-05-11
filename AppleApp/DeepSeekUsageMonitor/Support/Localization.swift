@@ -28,6 +28,7 @@ enum L10nKey: String {
     case invalidCredit
     case apiKeyMissing
     case liveBalanceLoaded
+    case liveUsageUnavailable
     case balanceLoadFailed
     case estimateNote
     case language
@@ -70,6 +71,7 @@ private let zhStrings: [L10nKey: String] = [
     .invalidCredit: "无效的额度数值",
     .apiKeyMissing: "未配置 API Key，当前显示安全的模拟数据。",
     .liveBalanceLoaded: "已读取 DeepSeek 真实余额。",
+    .liveUsageUnavailable: "官方暂未提供实时用量字段，今日用量不显示。",
     .balanceLoadFailed: "读取余额失败，当前显示模拟数据。",
     .estimateNote: "累计消费为估算值：初始总额度 - 当前余额。",
     .language: "语言",
@@ -112,6 +114,7 @@ private let enStrings: [L10nKey: String] = [
     .invalidCredit: "Invalid credit value",
     .apiKeyMissing: "API key is not configured. Showing safe mock data.",
     .liveBalanceLoaded: "Loaded live DeepSeek balance.",
+    .liveUsageUnavailable: "Official real-time usage fields are unavailable; today usage is not displayed.",
     .balanceLoadFailed: "Balance refresh failed. Showing mock data.",
     .estimateNote: "Total spend is estimated: initial total credit - current balance.",
     .language: "Language",

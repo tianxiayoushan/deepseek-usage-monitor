@@ -121,6 +121,16 @@ struct GaugePanelView: View {
         MonitorPalette.palette(for: settings.appTheme.resolved(using: systemColorScheme))
     }
 
+    private var usageUnavailable: Bool {
+        dashboard.isLive &&
+        dashboard.data.todaySpend == 0 &&
+        dashboard.data.todayTokens == 0 &&
+        dashboard.data.todayRequests == 0 &&
+        dashboard.data.spendTrend.isEmpty &&
+        dashboard.data.tokensTrend.isEmpty &&
+        dashboard.data.requestsTrend.isEmpty
+    }
+
     var body: some View {
         let gaugeSize = resolvedGaugeSize
         let spacing = resolvedSpacing(for: gaugeSize)
@@ -149,15 +159,15 @@ struct GaugePanelView: View {
 
             if showsSummary, isCompact {
                 LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
-                    MiniTrendView(title: settings.language.text(.todaySpend), points: dashboard.data.spendTrend, value: MonitorFormatters.cny(dashboard.data.todaySpend))
-                    MiniTrendView(title: settings.language.text(.tokens), points: dashboard.data.tokensTrend, value: MonitorFormatters.tokens(dashboard.data.todayTokens))
-                    MiniTrendView(title: settings.language.text(.todayRequests), points: dashboard.data.requestsTrend, value: "\(dashboard.data.todayRequests)")
+                    MiniTrendView(title: settings.language.text(.todaySpend), points: dashboard.data.spendTrend, value: usageUnavailable ? "--" : MonitorFormatters.cny(dashboard.data.todaySpend))
+                    MiniTrendView(title: settings.language.text(.tokens), points: dashboard.data.tokensTrend, value: usageUnavailable ? "--" : MonitorFormatters.tokens(dashboard.data.todayTokens))
+                    MiniTrendView(title: settings.language.text(.todayRequests), points: dashboard.data.requestsTrend, value: usageUnavailable ? "--" : "\(dashboard.data.todayRequests)")
                 }
             } else if showsSummary {
                 HStack(spacing: 10) {
-                    MiniTrendView(title: settings.language.text(.todaySpend), points: dashboard.data.spendTrend, value: MonitorFormatters.cny(dashboard.data.todaySpend))
-                    MiniTrendView(title: settings.language.text(.tokens), points: dashboard.data.tokensTrend, value: MonitorFormatters.tokens(dashboard.data.todayTokens))
-                    MiniTrendView(title: settings.language.text(.todayRequests), points: dashboard.data.requestsTrend, value: "\(dashboard.data.todayRequests)")
+                    MiniTrendView(title: settings.language.text(.todaySpend), points: dashboard.data.spendTrend, value: usageUnavailable ? "--" : MonitorFormatters.cny(dashboard.data.todaySpend))
+                    MiniTrendView(title: settings.language.text(.tokens), points: dashboard.data.tokensTrend, value: usageUnavailable ? "--" : MonitorFormatters.tokens(dashboard.data.todayTokens))
+                    MiniTrendView(title: settings.language.text(.todayRequests), points: dashboard.data.requestsTrend, value: usageUnavailable ? "--" : "\(dashboard.data.todayRequests)")
                 }
             }
         }
@@ -228,12 +238,19 @@ struct BalanceGaugeView: View {
         return min(max(dashboard.data.balance / dashboard.data.maxBalance, 0), 1)
     }
 
+    private var usageUnavailable: Bool {
+        dashboard.isLive &&
+        dashboard.data.todaySpend == 0 &&
+        dashboard.data.spendTrend.isEmpty
+    }
+
     var body: some View {
         IndustrialBalanceDial(
             balance: dashboard.data.balance,
             maxBalance: dashboard.data.maxBalance,
             todaySpend: dashboard.data.todaySpend,
             totalSpend: dashboard.data.totalSpend,
+            usageUnavailable: usageUnavailable,
             uptimeSeconds: dashboard.uptimeSeconds,
             progress: progress,
             language: settings.language,
@@ -251,6 +268,7 @@ private struct IndustrialBalanceDial: View {
     let maxBalance: Double
     let todaySpend: Double
     let totalSpend: Double
+    let usageUnavailable: Bool
     let uptimeSeconds: Int
     let progress: Double
     let language: AppLanguage
@@ -352,7 +370,7 @@ private struct IndustrialBalanceDial: View {
                 HStack(spacing: 8 * scale) {
                     Text(language.text(.today))
                         .foregroundStyle(palette.muted)
-                    Text(MonitorFormatters.cny(todaySpend))
+                    Text(usageUnavailable ? "--" : MonitorFormatters.cny(todaySpend))
                         .foregroundStyle(palette.primary)
                 }
                 .font(.system(size: 10 * scale, weight: .semibold, design: .monospaced))
@@ -556,11 +574,23 @@ struct MetricGridView: View {
     @Environment(DashboardStore.self) private var dashboard
     let columns: Int
 
+    private var usageUnavailable: Bool {
+        dashboard.isLive &&
+        dashboard.data.todayRequests == 0 &&
+        dashboard.data.todayTokens == 0 &&
+        dashboard.data.todaySpend == 0 &&
+        dashboard.data.models.isEmpty &&
+        dashboard.data.recentRequests.isEmpty
+    }
+
     var body: some View {
+        let unavailable = usageUnavailable ? "--" : nil
+        let unavailableDetail = settings.language.text(.liveUsageUnavailable)
+
         LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: columns), spacing: 12) {
-            MetricCardView(title: settings.language.text(.todayRequests), value: "\(dashboard.data.todayRequests)", detail: settings.language.text(.autoRefresh), systemImage: "arrow.up.forward.circle")
-            MetricCardView(title: settings.language.text(.todayTokens), value: MonitorFormatters.tokens(dashboard.data.todayTokens), detail: "PROMPT + COMP.", systemImage: "number")
-            MetricCardView(title: settings.language.text(.todaySpend), value: MonitorFormatters.cny(dashboard.data.todaySpend), detail: "CNY", systemImage: "yensign.circle", accent: .red)
+            MetricCardView(title: settings.language.text(.todayRequests), value: unavailable ?? "\(dashboard.data.todayRequests)", detail: usageUnavailable ? unavailableDetail : settings.language.text(.autoRefresh), systemImage: "arrow.up.forward.circle")
+            MetricCardView(title: settings.language.text(.todayTokens), value: unavailable ?? MonitorFormatters.tokens(dashboard.data.todayTokens), detail: usageUnavailable ? unavailableDetail : "PROMPT + COMP.", systemImage: "number")
+            MetricCardView(title: settings.language.text(.todaySpend), value: unavailable ?? MonitorFormatters.cny(dashboard.data.todaySpend), detail: usageUnavailable ? unavailableDetail : "CNY", systemImage: "yensign.circle", accent: .red)
             MetricCardView(title: settings.language.text(.totalSpend), value: MonitorFormatters.cny(dashboard.data.totalSpend), detail: settings.language.text(.estimateNote), systemImage: "sum")
         }
     }
@@ -630,6 +660,9 @@ struct ModelUsagePanel: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             PanelHeader(title: settings.language.text(.modelUsageToday), systemImage: "chart.bar.xaxis")
+            if dashboard.isLive && dashboard.data.models.isEmpty {
+                UnavailablePanelMessage()
+            }
             ForEach(dashboard.data.models) { model in
                 VStack(alignment: .leading, spacing: 10) {
                     ViewThatFits(in: .horizontal) {
@@ -798,6 +831,9 @@ struct RecentRequestsPanel: View {
             Rectangle()
                 .fill(palette.border.opacity(0.55))
                 .frame(height: 1)
+            if dashboard.isLive && dashboard.data.recentRequests.isEmpty {
+                UnavailablePanelMessage()
+            }
             ForEach(dashboard.data.recentRequests.prefix(limit)) { request in
                 ViewThatFits(in: .horizontal) {
                     HStack(spacing: 10) {
@@ -893,12 +929,39 @@ struct TrendCardsView: View {
     @Environment(SettingsStore.self) private var settings
     @Environment(DashboardStore.self) private var dashboard
 
+    private var usageUnavailable: Bool {
+        dashboard.isLive &&
+        dashboard.data.todaySpend == 0 &&
+        dashboard.data.todayTokens == 0 &&
+        dashboard.data.todayRequests == 0 &&
+        dashboard.data.spendTrend.isEmpty &&
+        dashboard.data.tokensTrend.isEmpty &&
+        dashboard.data.requestsTrend.isEmpty
+    }
+
     var body: some View {
         HStack(spacing: 12) {
-            MiniTrendView(title: settings.language.text(.todaySpend), points: dashboard.data.spendTrend, value: MonitorFormatters.cny(dashboard.data.todaySpend))
-            MiniTrendView(title: settings.language.text(.todayTokens), points: dashboard.data.tokensTrend, value: MonitorFormatters.tokens(dashboard.data.todayTokens))
-            MiniTrendView(title: settings.language.text(.todayRequests), points: dashboard.data.requestsTrend, value: "\(dashboard.data.todayRequests)")
+            MiniTrendView(title: settings.language.text(.todaySpend), points: dashboard.data.spendTrend, value: usageUnavailable ? "--" : MonitorFormatters.cny(dashboard.data.todaySpend))
+            MiniTrendView(title: settings.language.text(.todayTokens), points: dashboard.data.tokensTrend, value: usageUnavailable ? "--" : MonitorFormatters.tokens(dashboard.data.todayTokens))
+            MiniTrendView(title: settings.language.text(.todayRequests), points: dashboard.data.requestsTrend, value: usageUnavailable ? "--" : "\(dashboard.data.todayRequests)")
         }
+    }
+}
+
+private struct UnavailablePanelMessage: View {
+    @Environment(SettingsStore.self) private var settings
+    @Environment(\.colorScheme) private var systemColorScheme
+
+    private var palette: MonitorPalette {
+        MonitorPalette.palette(for: settings.appTheme.resolved(using: systemColorScheme))
+    }
+
+    var body: some View {
+        Text(settings.language.text(.liveUsageUnavailable))
+            .font(.system(size: 11, weight: .semibold, design: .monospaced))
+            .foregroundStyle(palette.muted)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.vertical, 8)
     }
 }
 

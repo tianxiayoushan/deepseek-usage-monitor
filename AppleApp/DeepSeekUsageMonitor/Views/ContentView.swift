@@ -4,6 +4,7 @@ struct ContentView: View {
     @Environment(SettingsStore.self) private var settings
     @Environment(DashboardStore.self) private var dashboard
     @Environment(\.colorScheme) private var systemColorScheme
+    @Environment(\.scenePhase) private var scenePhase
     @State private var showingSettings = false
     @State private var isFocusMode = false
 
@@ -55,6 +56,14 @@ struct ContentView: View {
         }
         .onChange(of: settings.refreshInterval) { _, _ in
             dashboard.restartAutoRefresh()
+            #if os(iOS)
+            BackgroundRefreshScheduler.schedule(refreshIntervalSeconds: settings.refreshInterval.seconds)
+            #endif
+        }
+        .onChange(of: scenePhase) { _, newPhase in
+            guard newPhase == .active else { return }
+            guard !dashboard.isLoading else { return }
+            Task { await dashboard.refresh() }
             #if os(iOS)
             BackgroundRefreshScheduler.schedule(refreshIntervalSeconds: settings.refreshInterval.seconds)
             #endif

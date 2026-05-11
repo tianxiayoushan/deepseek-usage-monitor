@@ -89,6 +89,28 @@ struct DashboardData: Codable, Equatable {
     var requestsTrend: [TrendPoint]
     var lastUpdatedAt: Date
 
+    static func liveBalanceOnly(
+        balance: Double,
+        maxBalance: Double,
+        totalSpend: Double,
+        now: Date = Date()
+    ) -> DashboardData {
+        DashboardData(
+            balance: balance,
+            maxBalance: maxBalance,
+            todayRequests: 0,
+            todayTokens: 0,
+            todaySpend: 0,
+            totalSpend: totalSpend,
+            models: [],
+            recentRequests: [],
+            spendTrend: [],
+            tokensTrend: [],
+            requestsTrend: [],
+            lastUpdatedAt: now
+        )
+    }
+
     static func mock(now: Date = Date()) -> DashboardData {
         func minutesAgo(_ minutes: Double) -> Date {
             now.addingTimeInterval(-minutes * 60)

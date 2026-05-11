@@ -35,6 +35,12 @@ final class DashboardStoreTests: XCTestCase {
         XCTAssertEqual(store.data.balance, 42.5, accuracy: 0.001)
         XCTAssertEqual(store.data.totalSpend, 57.5, accuracy: 0.001)
         XCTAssertEqual(store.data.maxBalance, 100, accuracy: 0.001)
+        XCTAssertEqual(store.data.todayRequests, 0)
+        XCTAssertEqual(store.data.todayTokens, 0)
+        XCTAssertEqual(store.data.todaySpend, 0, accuracy: 0.001)
+        XCTAssertTrue(store.data.models.isEmpty)
+        XCTAssertTrue(store.data.recentRequests.isEmpty)
+        XCTAssertTrue(store.data.spendTrend.isEmpty)
     }
 
     func testRefreshFailureFallsBackToMockWithError() async {
